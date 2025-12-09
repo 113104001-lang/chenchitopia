@@ -12,7 +12,7 @@
             margin: 0;
             font-family: "Microsoft JhengHei", sans-serif;
             overflow-x: hidden;
-            padding-bottom: 80px; /* 底部留白 */
+            padding-bottom: 80px;
         }
 
         /* --- 開場動畫區塊 --- */
@@ -54,7 +54,7 @@
 
         /* --- 主要內容容器 --- */
         .container {
-            max-width: 1100px; /* 稍微縮窄讓對齊更明顯 */
+            max-width: 1100px;
             margin: 0 auto;
             padding: 20px;
             position: relative;
@@ -71,20 +71,21 @@
             display: block;
         }
 
-        /* --- 手機 Popup 圖片 --- */
+        /* --- [修改處] 手機 Popup 圖片 --- */
         .phone-popup {
             position: absolute;
-            top: 60px;
-            left: 50px; /* 稍微調整位置 */
+            /* 原本是 60px，往上移 100px 變成 -40px */
+            top: -40px; 
+            left: 50px;
             z-index: 100;
             opacity: 0;
             transform: scale(0.3);
         }
         
         .phone-popup img {
-            width: 180px; /* 稍微調小避免遮擋 */
-            height: 60px;
-            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3)); /* 增加陰影更有立體感 */
+            width: 180px;
+            height: auto;
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
         }
 
         /* --- 標題樣式 --- */
@@ -107,14 +108,11 @@
             text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         }
 
-        /* --- [重點修改] 成員列表排版 --- */
+        /* --- 成員列表排版 --- */
         .members-grid {
             display: grid;
-            /* 這是關鍵：強制分成兩欄 (1fr 1fr)，寬度各半 */
             grid-template-columns: 1fr 1fr; 
-            /* 欄位間距 60px，讓左右兩邊分得更開 */
             column-gap: 60px;
-            /* 上下間距 40px */
             row-gap: 40px;
             width: 100%;
             max-width: 1000px;
@@ -125,7 +123,7 @@
             display: flex;
             align-items: center;
             gap: 20px;
-            background: rgba(255, 255, 255, 0.4); /* 半透明背景 */
+            background: rgba(255, 255, 255, 0.4);
             padding: 25px;
             border-radius: 20px;
             opacity: 0;
@@ -134,10 +132,9 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
 
-        /* 滑鼠移過去會有微微浮起的效果 */
         .member-card:hover {
             background: rgba(255, 255, 255, 0.6);
-            transform: translateY(-5px) !important; /* 蓋過動畫結束後的位置 */
+            transform: translateY(-5px) !important;
         }
 
         .member-photo {
@@ -151,7 +148,7 @@
         }
 
         .member-info {
-            text-align: left; /* 強制文字靠左 */
+            text-align: left;
         }
 
         .member-info h3 {
@@ -179,7 +176,7 @@
             transform: scale(0.9);
             border: 8px solid rgba(255,255,255,0.5);
             border-radius: 20px;
-            overflow: hidden; /* 確保圓角不被 iframe 蓋住 */
+            overflow: hidden;
         }
 
         .video-container iframe {
@@ -190,13 +187,12 @@
         /* --- RWD：手機版調整 --- */
         @media (max-width: 850px) {
             .members-grid {
-                /* 手機版改回單欄，這樣才不會太擠 */
                 grid-template-columns: 1fr; 
                 gap: 25px;
             }
             
             .member-card {
-                flex-direction: row; /* 手機版還是保持圖左文右 */
+                flex-direction: row;
                 padding: 15px;
             }
 
@@ -207,6 +203,7 @@
 
             .phone-popup {
                 position: relative;
+                /* 手機版維持原本的流暢度設定 */
                 top: 0;
                 left: 0;
                 margin: -40px auto 20px auto;
@@ -299,7 +296,6 @@
 
             const elements = document.querySelectorAll(".anim-element");
             
-            // 讓動畫依序出現 (每個間隔 0.15 秒)
             elements.forEach((el, index) => {
                 setTimeout(() => {
                     el.style.animation = "popup 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards";
