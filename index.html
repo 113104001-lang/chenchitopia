@@ -74,9 +74,9 @@
         /* --- [修改處] 手機 Popup 圖片 --- */
         .phone-popup {
             position: absolute;
+            /* 原本是 60px，往上移 100px 變成 -40px */
             top: -40px; 
-            /* 原本是 50px，往左移 60px 變成 -10px */
-            left: -10px; 
+            left: 50px;
             z-index: 100;
             opacity: 0;
             transform: scale(0.3);
@@ -203,6 +203,7 @@
 
             .phone-popup {
                 position: relative;
+                /* 手機版維持原本的流暢度設定 */
                 top: 0;
                 left: 0;
                 margin: -40px auto 20px auto;
