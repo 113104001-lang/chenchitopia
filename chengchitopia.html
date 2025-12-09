@@ -2,306 +2,334 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>政大方城市</title>
-	<style>
-   	   body {
-   	     background-image: linear-gradient(210deg,#F5E880 , #F5D280);
-   	     min-height: 400vh;
-   	   }
+    <style>
+        /* --- 基礎設定 --- */
+        body {
+            background-image: linear-gradient(210deg, #F5E880, #F5D280);
+            min-height: 100vh;
+            margin: 0;
+            font-family: "Microsoft JhengHei", sans-serif;
+            overflow-x: hidden;
+            padding-bottom: 80px;
+        }
 
-	#intro {
-	  position: fixed;
- 	 top: 0;
- 	 left: 0;
- 	 width: 100%;
- 	 height: 100%;
- 	 background: black;
- 	 display: flex;
-  	justify-content: center;
-  	align-items: center;
-	  z-index: 9999;
-  	animation: fadeOut 1.2s ease 1.5s forwards;
-	}
+        /* --- 開場動畫區塊 --- */
+        #intro {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            animation: fadeOut 1.2s ease 1.5s forwards;
+            pointer-events: none;
+        }
 
-	.intro-title { 
-  	color: white;
- 	 font-size: 64px;
-	  letter-spacing: 6px;
-	  opacity: 0;
-	  transform: scale(0.8);
-	  animation: popIn 1s ease forwards;
-	}
+        .intro-title {
+            color: white;
+            font-size: clamp(32px, 5vw, 64px);
+            letter-spacing: 6px;
+            opacity: 0;
+            transform: scale(0.8);
+            animation: popIn 1s ease forwards;
+        }
 
+        @keyframes popIn {
+            to { opacity: 1; transform: scale(1); }
+        }
 
-	@keyframes popIn {
-	  to {
-	    opacity: 1;
-	    transform: scale(1);
-	  }
-	}
+        @keyframes fadeOut {
+            to { opacity: 0; visibility: hidden; }
+        }
 
-	
-	@keyframes fadeOut {
-	  to {
-    	opacity: 0;
-    	visibility: hidden;
-  	}
-	}
-	</style>
-	<style>
+        /* --- Banner 圖片 --- */
+        .banner-img {
+            width: 100%;
+            /* [修改處] 原本是 325px，改成 200px 讓它變矮 */
+            height: 200px; 
+            object-fit: cover; /* 確保圖片縮小後不會變形，多餘部分會裁掉 */
+            display: block;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* 加一點陰影增加立體感 */
+        }
 
-	.popup-container {
-  	position: absolute;
-  	left: 80px;
-  	top: 70px;
-  	z-index: 10000;
-	}
+        /* --- 主要內容容器 (Grid 雙欄排版) --- */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            display: grid;
+            grid-template-columns: auto 1fr; /* 左欄自動寬度，右欄佔滿 */
+            gap: 50px; 
+            align-items: start;
+        }
 
-	.popup-image {
- 	 width: 400px;
- 	 opacity: 0;
-  	transform: scale(0.3);
-	}
-	@keyframes popup {
-	  to {
-	    opacity: 0.8;
-	    transform: scale(1);
-	  }
-	}	
-	.content {
-  	background-color: #F58484;
-  	width: 140px;
-  	left: 150px;
-  	top: 550px;
-  	position: absolute;
-	  opacity: 0;
-	  transform: scale(0.3);
-	}
-	@keyframes popup {
-	  to {
-	    opacity: 1;
-	    transform: scale(1);
-	  }
-	}	
+        /* --- 左欄：手機 Popup 圖片 --- */
+        .phone-popup {
+            margin-top: 50px; 
+            opacity: 0;
+            transform: scale(0.3);
+            z-index: 10;
+            position: sticky;
+            top: 20px;
+        }
+        
+        .phone-popup img {
+            width: 200px;
+            height: auto;
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
+        }
 
-	.member1 {
-  	width: 140px;
-  	left: 450px;
-  	top: 700px;
-  	position: absolute;
-	  opacity: 0;
-	  transform: scale(0.3);
-	}
-	@keyframes popup {
-	  to {
-	    opacity: 1;
-	    transform: scale(1);
-	  }
-	}	
-      .member2 {
-        width: 140px;
-  	left: 1000px;
-  	top: 700px;
-  	position: absolute;
-	  opacity: 0;
-	  transform: scale(0.3);
-	}
-	@keyframes popup {
-	  to {
-	    opacity: 1;
-	    transform: scale(1);
-	  }
-	}
-      .member3 {
-        width: 140px;
-  	left: 450px;
-  	top: 1000px;
-  	position: absolute;
-	  opacity: 0;
-	  transform: scale(0.3);
-	}
-	@keyframes popup {
-	  to {
-	    opacity: 1;
-	    transform: scale(1);
-	  }
-	}
-      .member4 {
-        width: 140px;
-  	left: 1000px;
-  	top: 1000px;
-  	position: absolute;
-	  opacity: 0;
-	  transform: scale(0.3);
-	}
-	@keyframes popup {
-	  to {
-	    opacity: 1;
-	    transform: scale(1);
-	  }
-	}
-      .member5 {
-        width: 140px;
-  	left: 450px;
-  	top: 1300px;
-  	position: absolute;
-	  opacity: 0;
-	  transform: scale(0.3);
-	}
-	@keyframes popup {
-	  to {
-	    opacity: 1;
-	    transform: scale(1);
-	  }
-	}
-      .photo {
-  	left: 850px;
-  	top: 725px;
-  	position: absolute;
-	  opacity: 0;
-	  transform: scale(0.3);
-	}
-	@keyframes popup {
-	  to {
-	    opacity: 1;
-	    transform: scale(1);
-	  }
-	}
-      .photo2 {
-  	left: 230px;
-  	top: 720px;
-  	position: absolute;
-	  opacity: 0;
-	  transform: scale(0.3);
-	}
-	@keyframes popup {
-	  to {
-	    opacity: 1;
-	    transform: scale(1);
-	  }
-	}
-      .photo3 {
-  	left: 230px;
-  	top: 1000px;
-  	position: absolute;
-	  opacity: 0;
-	  transform: scale(0.3);
-	}
-	@keyframes popup {
-	  to {
-	    opacity: 1;
-	    transform: scale(1);
-	  }
-	}
-      .yt{
-        left: 350px;
-        top: 1800px;
-        position: absolute;
-      }
-      .vlog {
-        background-color: #F58484;
-        width: 80px;
-  	left: 150px;
-  	top: 1650px;
-  	position: absolute;
-	  opacity: 0;
-	  transform: scale(0.3);
-	}
-	@keyframes popup {
-	  to {
-	    opacity: 1;
-	    transform: scale(1);
-	  }
-	}
-	</style>
+        /* --- 右欄：內容包裹器 --- */
+        .content-right-col {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        /* --- 標題樣式 --- */
+        .section-title {
+            background-color: #F58484;
+            padding: 12px 40px;
+            border-radius: 10px;
+            margin: 50px auto 40px auto;
+            text-align: center;
+            width: fit-content;
+            opacity: 0;
+            transform: scale(0.8);
+            box-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+        }
+        
+        .section-title h1 {
+            margin: 0;
+            font-size: 28px;
+            color: #fff;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        /* --- 成員列表排版 --- */
+        .members-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr; 
+            column-gap: 40px;
+            row-gap: 40px;
+            width: 100%;
+        }
+
+        /* 成員卡片樣式 */
+        .member-card {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: rgba(255, 255, 255, 0.4);
+            padding: 25px;
+            border-radius: 20px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .member-card:hover {
+            background: rgba(255, 255, 255, 0.6);
+            transform: translateY(-5px) !important;
+        }
+
+        .member-photo {
+            width: 130px;
+            height: 130px;
+            object-fit: cover;
+            border-radius: 50%;
+            flex-shrink: 0;
+            border: 5px solid #fff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .member-info {
+            text-align: left;
+        }
+
+        .member-info h3 {
+            margin: 0 0 8px 0;
+            font-size: 1.2rem;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+
+        .member-info h5 {
+            margin: 0;
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.6;
+            font-weight: normal;
+        }
+
+        /* --- 影片區塊 --- */
+        .video-container {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            margin-top: 20px;
+            opacity: 0;
+            transform: scale(0.9);
+            border: 8px solid rgba(255,255,255,0.5);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .video-container iframe {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* --- RWD：手機版調整 --- */
+        @media (max-width: 900px) {
+            .container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .phone-popup {
+                margin-top: 0;
+                margin-left: auto;
+                margin-right: auto;
+                margin-bottom: -30px;
+                position: relative;
+                top: 0;
+            }
+            
+            .phone-popup img {
+                width: 180px;
+            }
+
+            .members-grid {
+                grid-template-columns: 1fr; 
+                gap: 25px;
+            }
+            
+            .member-card {
+                flex-direction: row;
+                padding: 15px;
+            }
+
+            .member-photo {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .intro-title {
+                font-size: 32px;
+            }
+        }
+    </style>
 </head>
 <body>
-	<div class="popup-container">
-	  <img src="https://raw.githubusercontent.com/113104001-lang/11111/refs/heads/main/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202025-12-09%20212357.png"class="popup-image" style="width:200px; height:400px;">
-	</div>
-	<div id="intro">
-	  <h1 class="intro-title">政大方城市</h1>
-	</div>
-	<img src="https://raw.githubusercontent.com/113104001-lang/11111/refs/heads/main/275852.jpg"
-    	 style="width:1525px; height:325px;">
-	<script>
-	setTimeout(() => {
-	  document.getElementById("intro").remove();
 
-	  const img = document.querySelector(".popup-image");
-	  const content = document.querySelector(".content");
-	  const member1 = document.querySelector(".member1");
-	  const member2 = document.querySelector(".member2");
-	  const member3 = document.querySelector(".member3");
-	  const member4 = document.querySelector(".member4");
-	  const member5 = document.querySelector(".member5");
-	  const photo = document.querySelector(".photo");
-	  const photo2 = document.querySelector(".photo2");
-	  const photo3 = document.querySelector(".photo3");
-	  const photo4 = document.querySelector(".photo4");
-	  const photo5 = document.querySelector(".photo5");
-	  const vlog = document.querySelector(".vlog");
-	
-	  img.style.animation = "popup 1s ease-out forwards";
-	  content.style.animation = "popup 1s ease-out forwards";
-	  member1.style.animation = "popup 1s ease-out forwards";
-	  member2.style.animation = "popup 1s ease-out forwards";
-	  member3.style.animation = "popup 1s ease-out forwards";
-	  member4.style.animation = "popup 1s ease-out forwards";
-	  member5.style.animation = "popup 1s ease-out forwards";
-	  vlog.style.animation = "popup 1s ease-out forwards";
-	  photo.style.animation = "popup 1s ease-out forwards";
-	  photo2.style.animation = "popup 1s ease-out forwards";
-	  photo3.style.animation = "popup 1s ease-out forwards";
-	  photo4.style.animation = "popup 1s ease-out forwards";
-	  photo5.style.animation = "popup 1s ease-out forwards";
-	
-	}, 3000);
-	</script>
-	  <div class="content">
-		<h1>成員介紹</h1>
-	  </div>
-	  <div class="member1">
-		<h3>齊宏威 企四乙 代表動物:寶柏</h3>
-		<h5>人生目標是想冬眠</h5>
-	  </div>
-	  <div class="member2">
-		<h3>湯郁敏 哲學二 代表動物:快俠</h3>
-		<h5>以成為快俠為人生目標的見習快俠</h5>
-	  </div>
-	  <div class="member3">
-		<h3>李佩芯 日文一 代表動物:亞尼克</h3>
-		<h5>靠生乳捲賺取生活費</h5>
-	  </div>
-	  <div class="member4">
-		<h3>方翊庭 統計一 代表動物:茱蒂</h3>
-		<h5>活動跑不完作業寫不完</h5>
-	  </div>
-	  <div class="member5">
-		<h3>吳緣緣  教育一 代表動物:水母</h3>
-		<h5>目標是漂浮到畢業</h5>
-		  </div>
-	<div class="photo">
-		<img src="https://raw.githubusercontent.com/113104001-lang/11111/refs/heads/main/20251205_215609(1).jpg"
-     		style="width:125px; height:150px;">
-	</div>
-	<div class="yt">
-      <iframe width="1000" height="550" src="https://www.youtube.com/embed/GPtwHOr2S-U" title="YouTube video player" allow="autoplay;clipboard-write;encrypted-media" allowfullscreen></iframe>
-	</div>
-	  <div class="vlog">
-		<h1>vlog</h1>
-		  </div>
-	<div class="photo2">
-	<img src="https://raw.githubusercontent.com/113104001-lang/11111/refs/heads/main/%E9%BD%8A%E5%AE%8F%E5%A8%81.jpg"
-    	  style="width:175px; height:150px;">
-	</div>
-	<div class="photo3">
-	<img src="https://raw.githubusercontent.com/113104001-lang/11111/refs/heads/main/%E6%96%B9%E7%BF%8A%E5%BA%AD.jpg"
-    	  style="width:190px; height:150px;">
-	</div>
+    <div id="intro">
+        <h1 class="intro-title">政大方城市</h1>
+    </div>
+
+    <img src="https://raw.githubusercontent.com/113104001-lang/11111/refs/heads/main/275852.jpg" class="banner-img" alt="Banner">
+
+    <div class="container">
+        
+        <div class="phone-popup anim-element-phone">
+            <img src="https://raw.githubusercontent.com/113104001-lang/11111/refs/heads/main/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202025-12-09%20212357.png" alt="App">
+        </div>
+
+        <div class="content-right-col">
+            <div class="section-title anim-element">
+                <h1>成員介紹</h1>
+            </div>
+
+            <div class="members-grid">
+                
+                <div class="member-card anim-element">
+                    <img src="https://raw.githubusercontent.com/113104001-lang/11111/refs/heads/main/%E9%BD%8A%E5%AE%8F%E5%A8%81.jpg" class="member-photo">
+                    <div class="member-info">
+                        <h3>齊宏威 企四乙 <br>代表動物:寶柏</h3>
+                        <h5>人生目標是想冬眠</h5>
+                    </div>
+                </div>
+
+                <div class="member-card anim-element">
+                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/20251205_215609(1).jpg" class="member-photo">
+                    <div class="member-info">
+                        <h3>湯郁敏 哲學二 <br>代表動物:快俠</h3>
+                        <h5>以成為快俠為人生目標的見習快俠</h5>
+                    </div>
+                </div>
+
+                <div class="member-card anim-element">
+                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/%E6%9D%8E%E4%BD%A9%E8%8A%AF.png" class="member-photo">
+                    <div class="member-info">
+                        <h3>李佩芯 日文一 <br>代表動物:亞尼克</h3>
+                        <h5>靠生乳捲賺取生活費</h5>
+                    </div>
+                </div>
+
+                <div class="member-card anim-element">
+                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/%E6%96%B9%E7%BF%8A%E5%BA%AD.jpg" class="member-photo">
+                    <div class="member-info">
+                        <h3>方翊庭 統計一 <br>代表動物:茱蒂</h3>
+                        <h5>活動跑不完作業寫不完</h5>
+                    </div>
+                </div>
+
+                <div class="member-card anim-element">
+                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/%E5%90%B3%E7%B7%A3%E7%B7%A3.jpg" class="member-photo">
+                    <div class="member-info">
+                        <h3>吳緣緣 教育一 <br>代表動物:水母</h3>
+                        <h5>目標是漂浮到畢業</h5>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="section-title anim-element" style="margin-top: 80px;">
+                <h1>Vlog</h1>
+            </div>
+
+            <div class="video-container anim-element">
+                <iframe src="https://www.youtube.com/embed/GPtwHOr2S-U" title="YouTube video player" frameborder="0" allow="autoplay; clipboard-write; encrypted-media" allowfullscreen></iframe>
+            </div>
+        </div> </div>
+
+    <script>
+        setTimeout(() => {
+            const intro = document.getElementById("intro");
+            if (intro) intro.remove();
+
+            // 手機圖片動畫 (淡入+放大)
+            const phoneElement = document.querySelector(".anim-element-phone");
+            if (phoneElement) {
+                phoneElement.style.animation = "popup 1s ease-out forwards";
+            }
+
+            // 其他元素動畫 (淡入+上浮)
+            const elements = document.querySelectorAll(".anim-element");
+            elements.forEach((el, index) => {
+                setTimeout(() => {
+                    el.style.animation = "popup-up 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards";
+                }, index * 150);
+            });
+
+        }, 2500);
+    </script>
+    
+    <style>
+        @keyframes popup {
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes popup-up {
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+    </style>
 </body>
 </html>
-
-
-
-
