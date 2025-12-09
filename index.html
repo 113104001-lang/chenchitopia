@@ -8,7 +8,7 @@
         /* --- 基礎設定 --- */
         body {
             background-image: linear-gradient(210deg, #F5E880, #F5D280);
-            min-height: 200vh;
+            min-height: 100vh;
             margin: 0;
             font-family: "Microsoft JhengHei", sans-serif;
             overflow-x: hidden;
@@ -48,52 +48,45 @@
             to { opacity: 0; visibility: hidden; }
         }
 
-        @keyframes popup {
-            /* 修改動畫結束狀態：對於手機圖，我們只需要透明度變為1 */
-            to { opacity: 1; transform: scale(1); }
+        /* --- Banner 圖片 --- */
+        .banner-img {
+            width: 100%;
+            /* [修改處] 原本是 325px，改成 200px 讓它變矮 */
+            height: 200px; 
+            object-fit: cover; /* 確保圖片縮小後不會變形，多餘部分會裁掉 */
+            display: block;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* 加一點陰影增加立體感 */
         }
 
-        /* --- [修改重點] 主要內容容器 --- */
+        /* --- 主要內容容器 (Grid 雙欄排版) --- */
         .container {
             max-width: 1100px;
             margin: 0 auto;
             padding: 40px 20px;
             position: relative;
-            
-            /* 電腦版：啟用 Grid 雙欄排版 */
             display: grid;
-            /* 左欄(auto)給手機圖，右欄(1fr)佔滿剩餘空間 */
-            grid-template-columns: auto 1fr;
-            gap: 50px; /* 左右欄間距 */
-            align-items: start; /* 內容靠上對齊 */
+            grid-template-columns: auto 1fr; /* 左欄自動寬度，右欄佔滿 */
+            gap: 50px; 
+            align-items: start;
         }
 
-        /* --- [修改重點] 手機 Popup 圖片 --- */
+        /* --- 左欄：手機 Popup 圖片 --- */
         .phone-popup {
-            /* 移除絕對定位，讓它自然佔據左欄空間 */
-            /* position: absolute;  <- 移除 */
-            /* top: ... left: ...   <- 移除 */
-            
-            /* 讓它在左欄中置中或靠上，這裡設定一點上邊距讓它跟標題對齊 */
             margin-top: 50px; 
-            
             opacity: 0;
             transform: scale(0.3);
             z-index: 10;
-
-            /* (選用) 讓手機圖在滾動時稍微黏在上方，增加互動感 */
             position: sticky;
             top: 20px;
         }
         
         .phone-popup img {
-            width: 200px; /* 電腦版稍微放大一點 */
+            width: 200px;
             height: auto;
             filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
         }
 
-        /* --- [新增] 右側內容包裹器 --- */
-        /* 這個容器負責包住原本的所有內容，確保它們在右欄中水平置中 */
+        /* --- 右欄：內容包裹器 --- */
         .content-right-col {
             display: flex;
             flex-direction: column;
@@ -125,10 +118,9 @@
         .members-grid {
             display: grid;
             grid-template-columns: 1fr 1fr; 
-            column-gap: 40px; /* 稍微縮小間距以適應右欄 */
+            column-gap: 40px;
             row-gap: 40px;
             width: 100%;
-            /* max-width 不再需要，因為它現在被限制在右欄中 */
         }
 
         /* 成員卡片樣式 */
@@ -151,7 +143,7 @@
         }
 
         .member-photo {
-            width: 130px; /* 稍微縮小適應版面 */
+            width: 130px;
             height: 130px;
             object-fit: cover;
             border-radius: 50%;
@@ -196,29 +188,26 @@
             height: 100%;
         }
 
-        /* --- [修改重點] RWD：手機版調整 --- */
+        /* --- RWD：手機版調整 --- */
         @media (max-width: 900px) {
-            /* 手機版：主容器改回單欄垂直排列 */
             .container {
                 grid-template-columns: 1fr;
                 gap: 20px;
             }
 
-            /* 手機版：手機圖置中 */
             .phone-popup {
                 margin-top: 0;
                 margin-left: auto;
                 margin-right: auto;
-                margin-bottom: -30px; /* 讓它稍微蓋住下面的標題一點點 */
-                position: relative; /* 取消 sticky */
+                margin-bottom: -30px;
+                position: relative;
                 top: 0;
             }
             
             .phone-popup img {
-                width: 180px; /* 手機版縮小 */
+                width: 180px;
             }
 
-            /* 其他 RWD 設定維持不變 */
             .members-grid {
                 grid-template-columns: 1fr; 
                 gap: 25px;
@@ -317,17 +306,16 @@
             const intro = document.getElementById("intro");
             if (intro) intro.remove();
 
-            // 手機圖片的動畫 (只需要淡入)
+            // 手機圖片動畫 (淡入+放大)
             const phoneElement = document.querySelector(".anim-element-phone");
             if (phoneElement) {
                 phoneElement.style.animation = "popup 1s ease-out forwards";
             }
 
-            // 其他元素的動畫 (淡入 + 往上浮現)
+            // 其他元素動畫 (淡入+上浮)
             const elements = document.querySelectorAll(".anim-element");
             elements.forEach((el, index) => {
                 setTimeout(() => {
-                    // 這裡我把動畫名稱改成一個新的 'popup-up'，因為手機不需要 translateY
                     el.style.animation = "popup-up 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards";
                 }, index * 150);
             });
@@ -336,6 +324,9 @@
     </script>
     
     <style>
+        @keyframes popup {
+            to { opacity: 1; transform: scale(1); }
+        }
         @keyframes popup-up {
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
