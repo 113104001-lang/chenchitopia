@@ -11,8 +11,8 @@
             min-height: 100vh;
             margin: 0;
             font-family: "Microsoft JhengHei", sans-serif;
-            overflow-x: hidden; /* 防止水平卷軸 */
-            padding-bottom: 50px;
+            overflow-x: hidden;
+            padding-bottom: 80px; /* 底部留白 */
         }
 
         /* --- 開場動畫區塊 --- */
@@ -27,14 +27,13 @@
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            /* 動畫設定：停留1.5秒後，花1.2秒淡出 */
             animation: fadeOut 1.2s ease 1.5s forwards;
-            pointer-events: none; /* 讓動畫結束後滑鼠可以點擊下方內容 */
+            pointer-events: none;
         }
 
         .intro-title {
             color: white;
-            font-size: clamp(32px, 5vw, 64px); /* 字體大小隨螢幕縮放 */
+            font-size: clamp(32px, 5vw, 64px);
             letter-spacing: 6px;
             opacity: 0;
             transform: scale(0.8);
@@ -53,9 +52,9 @@
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        /* --- 主要內容容器 (讓內容置中) --- */
+        /* --- 主要內容容器 --- */
         .container {
-            max-width: 1200px;
+            max-width: 1100px; /* 稍微縮窄讓對齊更明顯 */
             margin: 0 auto;
             padding: 20px;
             position: relative;
@@ -72,114 +71,151 @@
             display: block;
         }
 
-        /* --- 手機 Popup --- */
+        /* --- 手機 Popup 圖片 --- */
         .phone-popup {
             position: absolute;
-            top: 50px;
-            left: 5%; /* 使用百分比而非固定像素 */
+            top: 60px;
+            left: 50px; /* 稍微調整位置 */
             z-index: 100;
             opacity: 0;
             transform: scale(0.3);
         }
         
         .phone-popup img {
-            width: 200px;
+            width: 180px; /* 稍微調小避免遮擋 */
             height: auto;
-            max-width: 100%;
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3)); /* 增加陰影更有立體感 */
         }
 
-        /* --- 通用標題樣式 --- */
+        /* --- 標題樣式 --- */
         .section-title {
             background-color: #F58484;
-            padding: 10px 30px;
+            padding: 12px 40px;
             border-radius: 10px;
-            margin: 40px auto;
+            margin: 50px auto 40px auto;
             text-align: center;
             width: fit-content;
             opacity: 0;
             transform: scale(0.8);
+            box-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+        }
+        
+        .section-title h1 {
+            margin: 0;
+            font-size: 28px;
+            color: #fff;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         }
 
-        /* --- 成員列表 (Grid 排版) --- */
+        /* --- [重點修改] 成員列表排版 --- */
         .members-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr); /* 電腦版顯示兩欄 */
-            gap: 40px;
+            /* 這是關鍵：強制分成兩欄 (1fr 1fr)，寬度各半 */
+            grid-template-columns: 1fr 1fr; 
+            /* 欄位間距 60px，讓左右兩邊分得更開 */
+            column-gap: 60px;
+            /* 上下間距 40px */
+            row-gap: 40px;
             width: 100%;
             max-width: 1000px;
-            margin-top: 20px;
         }
 
-        /* 單個成員卡片 */
+        /* 成員卡片樣式 */
         .member-card {
             display: flex;
             align-items: center;
             gap: 20px;
-            background: rgba(255, 255, 255, 0.3); /* 輕微背景讓文字更清楚 */
-            padding: 20px;
-            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.4); /* 半透明背景 */
+            padding: 25px;
+            border-radius: 20px;
             opacity: 0;
-            transform: translateY(20px); /* 初始位置稍微往下 */
+            transform: translateY(30px);
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        /* 滑鼠移過去會有微微浮起的效果 */
+        .member-card:hover {
+            background: rgba(255, 255, 255, 0.6);
+            transform: translateY(-5px) !important; /* 蓋過動畫結束後的位置 */
         }
 
         .member-photo {
-            width: 150px;
-            height: 150px;
+            width: 140px;
+            height: 140px;
             object-fit: cover;
-            border-radius: 50%; /* 圓形頭像，若要方形可拿掉這行 */
+            border-radius: 50%;
             flex-shrink: 0;
-            border: 4px solid white;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border: 5px solid #fff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .member-info {
+            text-align: left; /* 強制文字靠左 */
         }
 
         .member-info h3 {
-            margin: 0 0 10px 0;
-            font-size: 1.2rem;
-            color: #333;
+            margin: 0 0 8px 0;
+            font-size: 1.3rem;
+            color: #2c3e50;
+            font-weight: bold;
         }
 
         .member-info h5 {
             margin: 0;
-            font-weight: normal;
+            font-size: 1rem;
             color: #555;
-            line-height: 1.5;
+            line-height: 1.6;
+            font-weight: normal;
         }
 
         /* --- 影片區塊 --- */
         .video-container {
             width: 100%;
-            max-width: 1000px;
-            aspect-ratio: 16 / 9; /* 維持 16:9 比例 */
+            max-width: 900px;
+            aspect-ratio: 16 / 9;
             margin-top: 20px;
             opacity: 0;
             transform: scale(0.9);
+            border: 8px solid rgba(255,255,255,0.5);
+            border-radius: 20px;
+            overflow: hidden; /* 確保圓角不被 iframe 蓋住 */
         }
 
         .video-container iframe {
             width: 100%;
             height: 100%;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
-        /* --- 手機版 RWD 設定 --- */
-        @media (max-width: 768px) {
+        /* --- RWD：手機版調整 --- */
+        @media (max-width: 850px) {
             .members-grid {
-                grid-template-columns: 1fr; /* 手機版變單欄 */
+                /* 手機版改回單欄，這樣才不會太擠 */
+                grid-template-columns: 1fr; 
+                gap: 25px;
             }
             
             .member-card {
-                flex-direction: column; /* 手機版照片在文字上方 */
-                text-align: center;
+                flex-direction: row; /* 手機版還是保持圖左文右 */
+                padding: 15px;
+            }
+
+            .member-photo {
+                width: 100px;
+                height: 100px;
             }
 
             .phone-popup {
                 position: relative;
                 top: 0;
                 left: 0;
-                margin: -50px auto 20px auto; /* 調整位置 */
+                margin: -40px auto 20px auto;
                 display: flex;
                 justify-content: center;
+            }
+            
+            .intro-title {
+                font-size: 32px;
             }
         }
     </style>
@@ -195,7 +231,7 @@
     <div class="container">
         
         <div class="phone-popup anim-element">
-            <img src="https://raw.githubusercontent.com/113104001-lang/11111/refs/heads/main/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202025-12-09%20212357.png" alt="App Preview">
+            <img src="https://raw.githubusercontent.com/113104001-lang/11111/refs/heads/main/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202025-12-09%20212357.png" alt="App">
         </div>
 
         <div class="section-title anim-element">
@@ -203,6 +239,7 @@
         </div>
 
         <div class="members-grid">
+            
             <div class="member-card anim-element">
                 <img src="https://raw.githubusercontent.com/113104001-lang/11111/refs/heads/main/%E9%BD%8A%E5%AE%8F%E5%A8%81.jpg" class="member-photo">
                 <div class="member-info">
@@ -242,9 +279,10 @@
                     <h5>目標是漂浮到畢業</h5>
                 </div>
             </div>
+
         </div>
 
-        <div class="section-title anim-element" style="margin-top: 60px;">
+        <div class="section-title anim-element" style="margin-top: 80px;">
             <h1>Vlog</h1>
         </div>
 
@@ -255,21 +293,20 @@
     </div>
 
     <script>
-        // 等待開場動畫結束後，觸發內容動畫
         setTimeout(() => {
             const intro = document.getElementById("intro");
-            if (intro) intro.remove(); // 移除遮罩
+            if (intro) intro.remove();
 
             const elements = document.querySelectorAll(".anim-element");
             
-            // 讓元素一個接一個出現 (Stagger effect)，比較有質感
+            // 讓動畫依序出現 (每個間隔 0.15 秒)
             elements.forEach((el, index) => {
                 setTimeout(() => {
-                    el.style.animation = "popup 0.8s ease-out forwards";
-                }, index * 150); // 每個元素間隔 0.15 秒
+                    el.style.animation = "popup 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards";
+                }, index * 150);
             });
 
-        }, 2500); // 配合 CSS 的 fadeOut 時間
+        }, 2500);
     </script>
 </body>
 </html>
