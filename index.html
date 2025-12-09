@@ -5,15 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>政大方城市</title>
     <style>
+        /* --- 基礎設定 --- */
         body {
             background-image: linear-gradient(210deg, #F5E880, #F5D280);
-            min-height: 250vh; /* 稍微調整高度以配合內容 */
+            min-height: 100vh;
             margin: 0;
-            overflow-x: hidden; /* 避免水平卷軸 */
             font-family: "Microsoft JhengHei", sans-serif;
+            overflow-x: hidden; /* 防止水平卷軸 */
+            padding-bottom: 50px;
         }
 
-        /* 開場動畫區塊 */
+        /* --- 開場動畫區塊 --- */
         #intro {
             position: fixed;
             top: 0;
@@ -25,19 +27,20 @@
             justify-content: center;
             align-items: center;
             z-index: 9999;
+            /* 動畫設定：停留1.5秒後，花1.2秒淡出 */
             animation: fadeOut 1.2s ease 1.5s forwards;
+            pointer-events: none; /* 讓動畫結束後滑鼠可以點擊下方內容 */
         }
 
         .intro-title {
             color: white;
-            font-size: 64px;
+            font-size: clamp(32px, 5vw, 64px); /* 字體大小隨螢幕縮放 */
             letter-spacing: 6px;
             opacity: 0;
             transform: scale(0.8);
             animation: popIn 1s ease forwards;
         }
 
-        /* 通用動畫定義 */
         @keyframes popIn {
             to { opacity: 1; transform: scale(1); }
         }
@@ -47,67 +50,137 @@
         }
 
         @keyframes popup {
-            to { opacity: 1; transform: scale(1); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        /* 絕對定位元素設定 */
-        .popup-container {
-            position: absolute;
-            left: 80px;
-            top: 70px;
-            z-index: 10000;
+        /* --- 主要內容容器 (讓內容置中) --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        .popup-image {
-            opacity: 0;
-            transform: scale(0.3);
-            /* 動畫將由 JS 觸發 */
-        }
-
-        /* 共用類別：所有需要彈出動畫的元素 */
-        .anim-element {
-            position: absolute;
-            opacity: 0;
-            transform: scale(0.3);
-        }
-
-        /* 個別位置設定 */
-        .content { background-color: #F58484; width: 140px; left: 150px; top: 550px; padding: 10px; text-align: center; border-radius: 10px;}
-        
-        .member1 { width: 250px; left: 450px; top: 700px; }
-        .member2 { width: 250px; left: 1000px; top: 700px; }
-        .member3 { width: 250px; left: 450px; top: 1000px; }
-        .member4 { width: 250px; left: 1000px; top: 1000px; }
-        .member5 { width: 250px; left: 450px; top: 1300px; }
-        
-
-        .photo { left: 850px; top: 725px; }
-        .photo2 { left: 230px; top: 720px; }
-        .photo3 { left: 400px; top: 1000px; }
-        .photo4 { left: 900px; top: 1000px; }
-        .photo5 { left: 230px; top: 1000px; }
-
-        .vlog { 
-            background-color: #F58484; 
-            width: 120px; 
-            left: 150px; 
-            top: 1650px; 
-            text-align: center;
-            border-radius: 10px;
-            padding: 5px;
-        }
-
-        .yt {
-            left: 350px;
-            top: 1800px;
-            position: absolute;
-        }
-        
-        /* 標題圖片 */
+        /* --- Banner 圖片 --- */
         .banner-img {
-            width: 1525px; 
+            width: 100%;
             height: 325px;
-            object-fit: cover; /* 確保圖片不變形 */
+            object-fit: cover;
+            display: block;
+        }
+
+        /* --- 手機 Popup --- */
+        .phone-popup {
+            position: absolute;
+            top: 50px;
+            left: 5%; /* 使用百分比而非固定像素 */
+            z-index: 100;
+            opacity: 0;
+            transform: scale(0.3);
+        }
+        
+        .phone-popup img {
+            width: 200px;
+            height: auto;
+            max-width: 100%;
+        }
+
+        /* --- 通用標題樣式 --- */
+        .section-title {
+            background-color: #F58484;
+            padding: 10px 30px;
+            border-radius: 10px;
+            margin: 40px auto;
+            text-align: center;
+            width: fit-content;
+            opacity: 0;
+            transform: scale(0.8);
+        }
+
+        /* --- 成員列表 (Grid 排版) --- */
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 電腦版顯示兩欄 */
+            gap: 40px;
+            width: 100%;
+            max-width: 1000px;
+            margin-top: 20px;
+        }
+
+        /* 單個成員卡片 */
+        .member-card {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: rgba(255, 255, 255, 0.3); /* 輕微背景讓文字更清楚 */
+            padding: 20px;
+            border-radius: 15px;
+            opacity: 0;
+            transform: translateY(20px); /* 初始位置稍微往下 */
+        }
+
+        .member-photo {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%; /* 圓形頭像，若要方形可拿掉這行 */
+            flex-shrink: 0;
+            border: 4px solid white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .member-info h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .member-info h5 {
+            margin: 0;
+            font-weight: normal;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        /* --- 影片區塊 --- */
+        .video-container {
+            width: 100%;
+            max-width: 1000px;
+            aspect-ratio: 16 / 9; /* 維持 16:9 比例 */
+            margin-top: 20px;
+            opacity: 0;
+            transform: scale(0.9);
+        }
+
+        .video-container iframe {
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        /* --- 手機版 RWD 設定 --- */
+        @media (max-width: 768px) {
+            .members-grid {
+                grid-template-columns: 1fr; /* 手機版變單欄 */
+            }
+            
+            .member-card {
+                flex-direction: column; /* 手機版照片在文字上方 */
+                text-align: center;
+            }
+
+            .phone-popup {
+                position: relative;
+                top: 0;
+                left: 0;
+                margin: -50px auto 20px auto; /* 調整位置 */
+                display: flex;
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -117,89 +190,86 @@
         <h1 class="intro-title">政大方城市</h1>
     </div>
 
-    <img src="https://raw.githubusercontent.com/113104001-lang/11111/refs/heads/main/275852.jpg" class="banner-img">
+    <img src="https://raw.githubusercontent.com/113104001-lang/11111/refs/heads/main/275852.jpg" class="banner-img" alt="Banner">
 
-    <div class="popup-container">
-        <img src="https://raw.githubusercontent.com/113104001-lang/11111/refs/heads/main/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202025-12-09%20212357.png" class="popup-image" style="width:200px; height:400px;">
-    </div>
+    <div class="container">
+        
+        <div class="phone-popup anim-element">
+            <img src="https://raw.githubusercontent.com/113104001-lang/11111/refs/heads/main/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202025-12-09%20212357.png" alt="App Preview">
+        </div>
 
-    <div class="content anim-element">
-        <h1>成員介紹</h1>
-    </div>
+        <div class="section-title anim-element">
+            <h1>成員介紹</h1>
+        </div>
 
-    <div class="member1 anim-element">
-        <h3>齊宏威 企四乙 代表動物:寶柏</h3>
-        <h5>人生目標是想冬眠</h5>
-    </div>
+        <div class="members-grid">
+            <div class="member-card anim-element">
+                <img src="https://raw.githubusercontent.com/113104001-lang/11111/refs/heads/main/%E9%BD%8A%E5%AE%8F%E5%A8%81.jpg" class="member-photo">
+                <div class="member-info">
+                    <h3>齊宏威 企四乙 <br>代表動物:寶柏</h3>
+                    <h5>人生目標是想冬眠</h5>
+                </div>
+            </div>
 
-    <div class="member2 anim-element">
-        <h3>湯郁敏 哲學二 代表動物:快俠</h3>
-        <h5>以成為快俠為人生目標的見習快俠</h5>
-    </div>
+            <div class="member-card anim-element">
+                <img src="https://raw.githubusercontent.com/113104001-lang/11111/refs/heads/main/20251205_215609(1).jpg" class="member-photo">
+                <div class="member-info">
+                    <h3>湯郁敏 哲學二 <br>代表動物:快俠</h3>
+                    <h5>以成為快俠為人生目標的見習快俠</h5>
+                </div>
+            </div>
 
-    <div class="member3 anim-element">
-        <h3>李佩芯 日文一 代表動物:亞尼克</h3>
-        <h5>靠生乳捲賺取生活費</h5>
-    </div>
+            <div class="member-card anim-element">
+                <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/%E6%9D%8E%E4%BD%A9%E8%8A%AF.png" class="member-photo">
+                <div class="member-info">
+                    <h3>李佩芯 日文一 <br>代表動物:亞尼克</h3>
+                    <h5>靠生乳捲賺取生活費</h5>
+                </div>
+            </div>
 
-    <div class="member4 anim-element">
-        <h3>方翊庭 統計一 代表動物:茱蒂</h3>
-        <h5>活動跑不完作業寫不完</h5>
-    </div>
+            <div class="member-card anim-element">
+                <img src="https://raw.githubusercontent.com/113104001-lang/11111/refs/heads/main/%E6%96%B9%E7%BF%8A%E5%BA%AD.jpg" class="member-photo">
+                <div class="member-info">
+                    <h3>方翊庭 統計一 <br>代表動物:茱蒂</h3>
+                    <h5>活動跑不完作業寫不完</h5>
+                </div>
+            </div>
 
-    <div class="member5 anim-element">
-        <h3>吳緣緣 教育一 代表動物:水母</h3>
-        <h5>目標是漂浮到畢業</h5>
-    </div>
+            <div class="member-card anim-element">
+                <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/%E5%90%B3%E7%B7%A3%E7%B7%A3.jpg" class="member-photo">
+                <div class="member-info">
+                    <h3>吳緣緣 教育一 <br>代表動物:水母</h3>
+                    <h5>目標是漂浮到畢業</h5>
+                </div>
+            </div>
+        </div>
 
-    <div class="photo anim-element">
-        <img src="https://raw.githubusercontent.com/113104001-lang/11111/refs/heads/main/20251205_215609(1).jpg" style="width:125px; height:150px;">
-    </div>
+        <div class="section-title anim-element" style="margin-top: 60px;">
+            <h1>Vlog</h1>
+        </div>
 
-    <div class="photo2 anim-element">
-        <img src="https://raw.githubusercontent.com/113104001-lang/11111/refs/heads/main/%E9%BD%8A%E5%AE%8F%E5%A8%81.jpg" style="width:175px; height:150px;">
-    </div>
+        <div class="video-container anim-element">
+            <iframe src="https://www.youtube.com/embed/GPtwHOr2S-U" title="YouTube video player" frameborder="0" allow="autoplay; clipboard-write; encrypted-media" allowfullscreen></iframe>
+        </div>
 
-    <div class="photo3 anim-element">
-        <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/%E6%9D%8E%E4%BD%A9%E8%8A%AF.png" style="width:190px; height:150px;">
-    </div>
-
-    <div class="photo4 anim-element">
-        <img src="https://raw.githubusercontent.com/113104001-lang/11111/refs/heads/main/%E6%96%B9%E7%BF%8A%E5%BA%AD.jpg" style="width:190px; height:150px;">
-    </div>
-
-    <div class="photo5 anim-element">
-        <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/%E5%90%B3%E7%B7%A3%E7%B7%A3.jpg" style="width:190px; height:150px;">
-    </div>
-
-    <div class="vlog anim-element">
-        <h1>vlog</h1>
-    </div>
-
-    <div class="yt anim-element">
-        <iframe width="1000" height="550" src="https://www.youtube.com/embed/GPtwHOr2S-U" title="YouTube video player" frameborder="0" allow="autoplay; clipboard-write; encrypted-media" allowfullscreen></iframe>
     </div>
 
     <script>
+        // 等待開場動畫結束後，觸發內容動畫
         setTimeout(() => {
-            // 移除開場動畫
             const intro = document.getElementById("intro");
-            if (intro) intro.remove();
+            if (intro) intro.remove(); // 移除遮罩
 
-            // 選取所有需要動畫的元素
-            const img = document.querySelector(".popup-image");
-            // 使用 querySelectorAll 選取所有帶有 anim-element 類別的元素
             const elements = document.querySelectorAll(".anim-element");
-
-            // 執行動畫：手機圖片
-            if (img) img.style.animation = "popup 1s ease-out forwards";
-
-            // 執行動畫：其他所有元素
-            elements.forEach(el => {
-                el.style.animation = "popup 1s ease-out forwards";
+            
+            // 讓元素一個接一個出現 (Stagger effect)，比較有質感
+            elements.forEach((el, index) => {
+                setTimeout(() => {
+                    el.style.animation = "popup 0.8s ease-out forwards";
+                }, index * 150); // 每個元素間隔 0.15 秒
             });
 
-        }, 3000); // 3秒後執行
+        }, 2500); // 配合 CSS 的 fadeOut 時間
     </script>
 </body>
 </html>
