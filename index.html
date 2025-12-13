@@ -59,7 +59,7 @@
 
         /* --- 主要內容容器 --- */
         .container {
-            max-width: 1200px; /* 稍微加寬一點，讓3張卡片排得下 */
+            max-width: 1200px;
             margin: 0 auto;
             padding: 10px 20px 40px 20px;
             position: relative;
@@ -113,19 +113,19 @@
             text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         }
 
-        /* --- [修改重點] 成員列表排版：上3下2 --- */
+        /* --- 成員列表排版 (Flexbox) --- */
         .members-grid {
-            display: flex;         /* 改用 Flexbox */
-            flex-wrap: wrap;       /* 允許換行 */
-            justify-content: center; /* 讓內容置中對齊 (達成下2置中) */
-            gap: 20px;             /* 卡片間距 */
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
             width: 100%;
         }
 
         /* 成員卡片樣式 */
         .member-card {
             display: flex;
-            flex-direction: column; /* 因為空間變小，改為垂直排列 (圖上文下) */
+            flex-direction: column;
             align-items: center;
             text-align: center;
             background: rgba(255, 255, 255, 0.4);
@@ -135,10 +135,8 @@
             transform: translateY(30px);
             transition: transform 0.3s ease;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            
-            /* [修改重點] 設定寬度為 31%，這樣一排剛好放 3 個 */
             width: 30%; 
-            min-width: 200px; /* 避免縮太小 */
+            min-width: 200px;
             box-sizing: border-box;
         }
 
@@ -147,8 +145,9 @@
             transform: translateY(-5px) !important;
         }
 
+        /* [修改重點] 成員照片樣式 - 增加點擊提示與縮放 */
         .member-photo {
-            width: 100px; /* 配合3欄排版，稍微縮小頭像 */
+            width: 100px;
             height: 100px;
             object-fit: cover;
             border-radius: 50%;
@@ -156,6 +155,15 @@
             border: 4px solid #fff;
             box-shadow: 0 4px 8px rgba(0,0,0,0.15);
             margin-bottom: 10px;
+            
+            /* 新增點擊互動樣式 */
+            cursor: zoom-in; /* 滑鼠游標變成放大鏡 */
+            transition: transform 0.2s ease;
+        }
+
+        /* 滑鼠指到圖片時，圖片會稍微放大 */
+        .member-photo:hover {
+            transform: scale(1.1);
         }
 
         .member-info {
@@ -177,19 +185,19 @@
             font-weight: normal;
         }
 
-        /* --- [新增] 中間插入圖片樣式 --- */
+        /* --- 中間插入圖片樣式 --- */
         .mid-image-container {
             width: 100%;
-            margin: 40px 0 20px 0; /* 上下留白 */
+            margin: 40px 0 20px 0;
             display: flex;
             justify-content: center;
-            opacity: 0; /* 動畫預備 */
+            opacity: 0;
             transform: scale(0.9);
         }
 
         .mid-image-container img {
             width: 100%;
-            max-width: 600px; /* 限制最大寬度，避免圖片太大 */
+            max-width: 600px;
             height: auto;
             border-radius: 15px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
@@ -199,7 +207,7 @@
         .video-container {
             width: 100%;
             aspect-ratio: 16 / 9;
-            margin-top: 10px; /* 縮小與標題的距離 */
+            margin-top: 10px;
             opacity: 0;
             transform: scale(0.9);
             border: 8px solid rgba(255,255,255,0.5);
@@ -210,6 +218,37 @@
         .video-container iframe {
             width: 100%;
             height: 100%;
+        }
+
+        /* --- [新增] 燈箱 (Lightbox) 樣式 --- */
+        #lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85); /* 深色半透明背景 */
+            display: none; /* 預設隱藏 */
+            justify-content: center;
+            align-items: center;
+            z-index: 10000; /* 確保在最上層 */
+            cursor: zoom-out; /* 提示點擊可關閉 */
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        #lightbox.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        #lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            border: 5px solid white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            animation: popIn 0.3s ease;
         }
 
         /* --- RWD：手機版調整 --- */
@@ -232,15 +271,13 @@
                 width: 160px;
             }
 
-            /* 手機版改回單欄或雙欄 */
             .members-grid {
                 gap: 15px;
             }
             
             .member-card {
-                /* 手機版寬度佔滿 100%，變回一直排 */
                 width: 100%; 
-                flex-direction: row; /* 手機版空間夠高，改回圖左文右 */
+                flex-direction: row; 
                 text-align: left;
                 align-items: center;
                 gap: 15px;
@@ -264,6 +301,10 @@
         <h1 class="intro-title">政大方城市</h1>
     </div>
 
+    <div id="lightbox">
+        <img id="lightbox-img" src="" alt="放大圖片">
+    </div>
+
     <img src="https://raw.githubusercontent.com/113104001-lang/11111/refs/heads/main/275852.jpg" class="banner-img" alt="Banner">
 
     <div class="container">
@@ -278,12 +319,11 @@
             </div>
 
             <div class="members-grid">
-                
                 <div class="member-card anim-element">
                     <img src="https://raw.githubusercontent.com/113104001-lang/11111/refs/heads/main/%E9%BD%8A%E5%AE%8F%E5%A8%81.jpg" class="member-photo">
                     <div class="member-info">
                         <h3>齊宏威 企四乙 <br>代表動物:寶柏</h3>
-                        <h5>想去一年四季都是冬天的國家冬眠</h5>
+                        <h5>人生目標是想冬眠</h5>
                     </div>
                 </div>
 
@@ -318,7 +358,6 @@
                         <h5>目標是漂浮到畢業</h5>
                     </div>
                 </div>
-
             </div>
 
             <div class="mid-image-container anim-element">
@@ -354,6 +393,36 @@
             });
 
         }, 2500);
+
+        // --- [新增] 圖片放大功能的 JavaScript ---
+        
+        // 1. 取得所有成員照片和燈箱元素
+        const memberPhotos = document.querySelectorAll('.member-photo');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+
+        // 2. 幫每一張照片加上點擊事件
+        memberPhotos.forEach(photo => {
+            photo.addEventListener('click', () => {
+                // 將被點擊照片的網址，設定給燈箱裡的大圖
+                lightboxImg.src = photo.src;
+                // 顯示燈箱
+                lightbox.style.display = 'flex';
+                // 稍微延遲一下加上 active class 讓淡入動畫生效
+                setTimeout(() => {
+                    lightbox.classList.add('active');
+                }, 10);
+            });
+        });
+
+        // 3. 點擊燈箱任意處關閉
+        lightbox.addEventListener('click', () => {
+            lightbox.classList.remove('active');
+            // 等淡出動畫結束後再隱藏
+            setTimeout(() => {
+                lightbox.style.display = 'none';
+            }, 300);
+        });
     </script>
     
     <style>
