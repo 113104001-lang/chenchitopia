@@ -48,10 +48,9 @@
             to { opacity: 0; visibility: hidden; }
         }
 
-        /* --- [修改 1] Banner 圖片 --- */
+        /* --- Banner 圖片 --- */
         .banner-img {
             width: 100%;
-            /* 高度從 200px 改為 120px，大幅騰出空間 */
             height: 120px; 
             object-fit: cover;
             display: block;
@@ -60,20 +59,18 @@
 
         /* --- 主要內容容器 --- */
         .container {
-            max-width: 1100px;
+            max-width: 1200px; /* 稍微加寬一點，讓3張卡片排得下 */
             margin: 0 auto;
-            /* [修改 2] 上方內距從 40px 減少到 10px */
             padding: 10px 20px 40px 20px;
             position: relative;
             display: grid;
             grid-template-columns: auto 1fr;
-            gap: 50px; 
+            gap: 40px; 
             align-items: start;
         }
 
-        /* --- [修改 3] 左欄：手機 Popup 圖片 --- */
+        /* --- 左欄：手機 Popup 圖片 --- */
         .phone-popup {
-            /* 上方邊距從 50px 減少到 10px，讓它往上對齊 */
             margin-top: 10px; 
             opacity: 0;
             transform: scale(0.3);
@@ -96,12 +93,11 @@
             width: 100%;
         }
 
-        /* --- [修改 4] 標題樣式 --- */
+        /* --- 標題樣式 --- */
         .section-title {
             background-color: #F58484;
-            padding: 8px 30px; /* 稍微把標題框變瘦一點 */
+            padding: 8px 30px;
             border-radius: 10px;
-            /* 上下邊距大幅減少：上方 10px，下方 25px */
             margin: 10px auto 25px auto;
             text-align: center;
             width: fit-content;
@@ -112,32 +108,38 @@
         
         .section-title h1 {
             margin: 0;
-            font-size: 24px; /* 字體稍微縮小一點點以配合變瘦的框 */
+            font-size: 24px;
             color: #fff;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         }
 
-        /* --- 成員列表排版 --- */
+        /* --- [修改重點] 成員列表排版：上3下2 --- */
         .members-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr; 
-            column-gap: 40px;
-            row-gap: 30px; /* 卡片間距稍微縮小一點 */
+            display: flex;         /* 改用 Flexbox */
+            flex-wrap: wrap;       /* 允許換行 */
+            justify-content: center; /* 讓內容置中對齊 (達成下2置中) */
+            gap: 20px;             /* 卡片間距 */
             width: 100%;
         }
 
         /* 成員卡片樣式 */
         .member-card {
             display: flex;
+            flex-direction: column; /* 因為空間變小，改為垂直排列 (圖上文下) */
             align-items: center;
-            gap: 15px; /* 內容間距微調 */
+            text-align: center;
             background: rgba(255, 255, 255, 0.4);
-            padding: 20px; /* 內距微調 */
+            padding: 15px;
             border-radius: 20px;
             opacity: 0;
             transform: translateY(30px);
             transition: transform 0.3s ease;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            
+            /* [修改重點] 設定寬度為 31%，這樣一排剛好放 3 個 */
+            width: 30%; 
+            min-width: 200px; /* 避免縮太小 */
+            box-sizing: border-box;
         }
 
         .member-card:hover {
@@ -146,21 +148,22 @@
         }
 
         .member-photo {
-            width: 120px; /* 照片稍微縮小一點點 */
-            height: 120px;
+            width: 100px; /* 配合3欄排版，稍微縮小頭像 */
+            height: 100px;
             object-fit: cover;
             border-radius: 50%;
             flex-shrink: 0;
             border: 4px solid #fff;
             box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            margin-bottom: 10px;
         }
 
         .member-info {
-            text-align: left;
+            width: 100%;
         }
 
         .member-info h3 {
-            margin: 0 0 5px 0;
+            margin: 5px 0;
             font-size: 1.1rem;
             color: #2c3e50;
             font-weight: bold;
@@ -168,17 +171,35 @@
 
         .member-info h5 {
             margin: 0;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: #555;
-            line-height: 1.5;
+            line-height: 1.4;
             font-weight: normal;
+        }
+
+        /* --- [新增] 中間插入圖片樣式 --- */
+        .mid-image-container {
+            width: 100%;
+            margin: 40px 0 20px 0; /* 上下留白 */
+            display: flex;
+            justify-content: center;
+            opacity: 0; /* 動畫預備 */
+            transform: scale(0.9);
+        }
+
+        .mid-image-container img {
+            width: 100%;
+            max-width: 600px; /* 限制最大寬度，避免圖片太大 */
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
         /* --- 影片區塊 --- */
         .video-container {
             width: 100%;
             aspect-ratio: 16 / 9;
-            margin-top: 20px;
+            margin-top: 10px; /* 縮小與標題的距離 */
             opacity: 0;
             transform: scale(0.9);
             border: 8px solid rgba(255,255,255,0.5);
@@ -208,22 +229,27 @@
             }
             
             .phone-popup img {
-                width: 160px; /* 手機版圖縮小一點以免佔太多空間 */
+                width: 160px;
             }
 
+            /* 手機版改回單欄或雙欄 */
             .members-grid {
-                grid-template-columns: 1fr; 
-                gap: 20px;
+                gap: 15px;
             }
             
             .member-card {
-                flex-direction: row;
-                padding: 15px;
+                /* 手機版寬度佔滿 100%，變回一直排 */
+                width: 100%; 
+                flex-direction: row; /* 手機版空間夠高，改回圖左文右 */
+                text-align: left;
+                align-items: center;
+                gap: 15px;
             }
 
             .member-photo {
                 width: 90px;
                 height: 90px;
+                margin-bottom: 0;
             }
             
             .intro-title {
@@ -295,7 +321,11 @@
 
             </div>
 
-            <div class="section-title anim-element" style="margin-top: 80px;">
+            <div class="mid-image-container anim-element">
+                <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/%E6%94%BF%E5%A4%A7%E6%96%B9%E5%9F%8E%E5%B8%82.png" alt="政大方城市">
+            </div>
+
+            <div class="section-title anim-element">
                 <h1>Vlog</h1>
             </div>
 
