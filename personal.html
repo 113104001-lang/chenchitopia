@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>宅宅基地</title>
+    <title>個人介紹網站</title>
     <style>
         /* --- 基礎設定 --- */
         body {
@@ -31,13 +31,13 @@
             pointer-events: none;
         }
 
-        .intro-title {
-            color: white;
-            font-size: clamp(32px, 5vw, 64px);
-            letter-spacing: 6px;
+        .intro-logo {
+            width: 60%;
+            max-width: 500px;
+            height: auto;
             opacity: 0;
             transform: scale(0.8);
-            animation: popIn 1s ease forwards;
+            animation: popIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
 
         @keyframes popIn {
@@ -48,10 +48,9 @@
             to { opacity: 0; visibility: hidden; }
         }
 
-        /* --- [修改 1] Banner 圖片 --- */
+        /* --- Banner 圖片 --- */
         .banner-img {
             width: 100%;
-            /* 高度從 200px 改為 120px，大幅騰出空間 */
             height: 120px; 
             object-fit: cover;
             display: block;
@@ -60,20 +59,18 @@
 
         /* --- 主要內容容器 --- */
         .container {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
-            /* [修改 2] 上方內距從 40px 減少到 10px */
             padding: 10px 20px 40px 20px;
             position: relative;
             display: grid;
             grid-template-columns: auto 1fr;
-            gap: 50px; 
+            gap: 40px; 
             align-items: start;
         }
 
-        /* --- [修改 3] 左欄：手機 Popup 圖片 --- */
+        /* --- 左欄：手機 Popup 圖片 --- */
         .phone-popup {
-            /* 上方邊距從 50px 減少到 10px，讓它往上對齊 */
             margin-top: 10px; 
             opacity: 0;
             transform: scale(0.3);
@@ -96,13 +93,12 @@
             width: 100%;
         }
 
-        /* --- [修改 4] 標題樣式 --- */
+        /* --- 通用標題樣式 --- */
         .section-title {
             background-color: #F58484;
-            padding: 8px 30px; /* 稍微把標題框變瘦一點 */
+            padding: 8px 30px;
             border-radius: 10px;
-            /* 上下邊距大幅減少：上方 10px，下方 25px */
-            margin: 10px auto 25px auto;
+            margin: 30px auto 25px auto; /* 稍微調整間距 */
             text-align: center;
             width: fit-content;
             opacity: 0;
@@ -112,32 +108,79 @@
         
         .section-title h1 {
             margin: 0;
-            font-size: 24px; /* 字體稍微縮小一點點以配合變瘦的框 */
+            font-size: 24px;
             color: #fff;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         }
 
-        /* --- 成員列表排版 --- */
+        /* --- [新增] 自我介紹卡片樣式 --- */
+        .profile-card {
+            background: rgba(255, 255, 255, 0.5); /* 稍微比下面卡片不透明一點 */
+            padding: 30px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            width: 100%;
+            box-sizing: border-box; /* 確保 padding 不會撐爆寬度 */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .profile-img {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid #fff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            flex-shrink: 0; /* 防止照片被擠壓 */
+        }
+
+        .profile-text {
+            text-align: left;
+            flex: 1; /* 佔滿剩餘空間 */
+        }
+
+        .profile-text h2 {
+            margin: 0 0 10px 0;
+            color: #2c3e50;
+            font-size: 1.8rem;
+        }
+
+        .profile-text p {
+            margin: 0;
+            color: #555;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        /* --- 動畫列表排版 (Flexbox) --- */
         .members-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr; 
-            column-gap: 40px;
-            row-gap: 30px; /* 卡片間距稍微縮小一點 */
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
             width: 100%;
         }
 
-        /* 成員卡片樣式 */
+        /* 動畫/成員卡片樣式 */
         .member-card {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 15px; /* 內容間距微調 */
+            text-align: center;
             background: rgba(255, 255, 255, 0.4);
-            padding: 20px; /* 內距微調 */
+            padding: 15px;
             border-radius: 20px;
             opacity: 0;
             transform: translateY(30px);
             transition: transform 0.3s ease;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            width: 30%; 
+            min-width: 200px;
+            box-sizing: border-box;
         }
 
         .member-card:hover {
@@ -145,231 +188,30 @@
             transform: translateY(-5px) !important;
         }
 
+        /* 照片樣式 */
         .member-photo {
-            width: 120px; /* 照片稍微縮小一點點 */
-            height: 120px;
+            width: 100px;
+            height: 100px;
             object-fit: cover;
             border-radius: 50%;
             flex-shrink: 0;
             border: 4px solid #fff;
             box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            margin-bottom: 10px;
+            cursor: zoom-in;
+            transition: transform 0.2s ease;
+        }
+
+        .member-photo:hover {
+            transform: scale(1.1);
         }
 
         .member-info {
-            text-align: left;
+            width: 100%;
         }
 
         .member-info h3 {
-            margin: 0 0 5px 0;
+            margin: 5px 0;
             font-size: 1.1rem;
             color: #2c3e50;
-            font-weight: bold;
-        }
-
-        .member-info h5 {
-            margin: 0;
-            font-size: 0.95rem;
-            color: #555;
-            line-height: 1.5;
-            font-weight: normal;
-        }
-
-        /* --- 影片區塊 --- */
-        .video-container {
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            margin-top: 20px;
-            opacity: 0;
-            transform: scale(0.9);
-            border: 8px solid rgba(255,255,255,0.5);
-            border-radius: 20px;
-            overflow: hidden;
-        }
-
-        .video-container iframe {
-            width: 100%;
-            height: 100%;
-        }
-
-        /* --- RWD：手機版調整 --- */
-        @media (max-width: 900px) {
-            .container {
-                grid-template-columns: 1fr;
-                gap: 15px;
-            }
-
-            .phone-popup {
-                margin-top: 0;
-                margin-left: auto;
-                margin-right: auto;
-                margin-bottom: -20px;
-                position: relative;
-                top: 0;
-            }
-            
-            .phone-popup img {
-                width: 160px; /* 手機版圖縮小一點以免佔太多空間 */
-            }
-
-            .members-grid {
-                grid-template-columns: 1fr; 
-                gap: 20px;
-            }
-            
-            .member-card {
-                flex-direction: row;
-                padding: 15px;
-            }
-
-            .member-photo {
-                width: 90px;
-                height: 90px;
-            }
-            
-            .intro-title {
-                font-size: 32px;
-            }
-        }
-    </style>
-</head>
-<body>
-
-    <div id="intro">
-        <h1 class="intro-title">我的宅宅基地</h1>
-    </div>
-
-    <img src="https://raw.githubusercontent.com/113104001-lang/11111/refs/heads/main/275852.jpg" class="banner-img" alt="Banner">
-
-    <div class="container">
-        
-        <div class="phone-popup anim-element-phone">
-            <img src="https://raw.githubusercontent.com/113104001-lang/11111/refs/heads/main/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202025-12-09%20212357.png" alt="App">
-        </div>
-
-        <div class="content-right-col">
-            <div class="section-title anim-element">
-                <h1>那些我看過的動漫(其中一些)</h1>
-            </div>
-
-            <div class="members-grid">
-                
-                <div class="member-card anim-element">
-                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/Shaman_King.jpg" class="member-photo">
-                    <div class="member-info">
-                        <h3>通靈王<br>電視兒童時期</h3>
-                        <h5>已經記不清楚人生第一部動漫是什麼了記不清楚人生第一部動漫是甚麼了，但這一部絕對是我童年最喜歡的系列之一!戰鬥、超能力、男主角群、一堆美男子，算是我的動漫啟蒙(笑)
-                        很喜歡裡面</h5>
-                    </div>
-                </div>
-
-                <div class="member-card anim-element">
-                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/Inazuma_Eleven_logo.jpg" class="member-photo">
-                    <div class="member-info">
-                        <h3>閃電十一人 <br>電視兒童時期</h3>
-                        <h5>以成為快俠為人生目標的見習快俠</h5>
-                    </div>
-                </div>
-
-                <div class="member-card anim-element">
-                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/Mermaid_Melody_Pichi_Pichi_Pitch.jpg" class="member-photo">
-                    <div class="member-info">
-                        <h3>真珠美人魚 <br>電視兒童時期</h3>
-                        <h5>靠生乳捲賺取生活費</h5>
-                    </div>
-                </div>
-
-                <div class="member-card anim-element">
-                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/Sugar_Sugar_Rune_manga_cover.jpg" class="member-photo">
-                    <div class="member-info">
-                        <h3>魔女的考驗<br>電視兒童時期</h3>
-                        <h5>活動跑不完作業寫不完</h5>
-                    </div>
-                </div>
-
-                <div class="member-card anim-element">
-                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/Mononoke%2CAnimated_poster%2CFeb_2020.jpg" class="member-photo">
-                    <div class="member-info">
-                        <h3>怪化貓 <br>轉戰3c兒童</h3>
-                        <h5>目標是漂浮到畢業</h5>
-                    </div>
-                </div>
-
-                <div class="member-card anim-element">
-                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/14185-p_230118.png" class="member-photo">
-                    <div class="member-info">
-                        <h3>影子籃球員 <br>轉戰3c兒童</h3>
-                        <h5>目標是漂浮到畢業</h5>
-                    </div>
-                </div>
-                <div class="member-card anim-element">
-                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/getImage.webp" class="member-photo">
-                    <div class="member-info">
-                        <h3>出入禁止的鼴鼠 <br>略老宅宅</h3>
-                        <h5>目標是漂浮到畢業</h5>
-                    </div>
-                </div>
-                <div class="member-card anim-element">
-                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/210111-saiyuki-01.jpg" class="member-photo">
-                    <div class="member-info">
-                        <h3>最遊記 <br>略老宅宅</h3>
-                        <h5>目標是漂浮到畢業</h5>
-                    </div>
-                </div>
-                <div class="member-card anim-element">
-                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/%E3%81%86%E3%82%89%E3%81%BF%E3%81%A1%E3%81%8A%E5%85%84%E3%81%95%E3%82%93.jpg" class="member-photo">
-                    <div class="member-info">
-                        <h3>陰晴不定體操哥哥 <br>略老宅宅</h3>
-                        <h5>目標是漂浮到畢業</h5>
-                    </div>
-                </div>
-                <div class="member-card anim-element">
-                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/Kakushigoto_Key_Visual.jpeg" class="member-photo">
-                    <div class="member-info">
-                        <h3>隱瞞之事<br>略老宅宅</h3>
-                        <h5>目標是漂浮到畢業</h5>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="section-title anim-element" style="margin-top: 80px;">
-                <h1>Vlog</h1>
-            </div>
-
-            <div class="video-container anim-element">
-                <iframe src="https://www.youtube.com/embed/GPtwHOr2S-U" title="YouTube video player" frameborder="0" allow="autoplay; clipboard-write; encrypted-media" allowfullscreen></iframe>
-            </div>
-        </div>
-
-    </div>
-
-    <script>
-        setTimeout(() => {
-            const intro = document.getElementById("intro");
-            if (intro) intro.remove();
-
-            const phoneElement = document.querySelector(".anim-element-phone");
-            if (phoneElement) {
-                phoneElement.style.animation = "popup 1s ease-out forwards";
-            }
-
-            const elements = document.querySelectorAll(".anim-element");
-            elements.forEach((el, index) => {
-                setTimeout(() => {
-                    el.style.animation = "popup-up 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards";
-                }, index * 150);
-            });
-
-        }, 2500);
-    </script>
-    
-    <style>
-        @keyframes popup {
-            to { opacity: 1; transform: scale(1); }
-        }
-        @keyframes popup-up {
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-    </style>
-</body>
-</html>
+            font-weight: bold
