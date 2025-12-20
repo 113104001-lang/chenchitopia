@@ -48,24 +48,15 @@
             to { opacity: 0; visibility: hidden; }
         }
 
-        /* --- [修改] 主要內容容器 --- */
-        /* 改為單欄置中，移除原本的 Grid 雙欄設定 */
+        /* --- 主要內容容器 --- */
         .container {
-            max-width: 1000px; /* 限制最大寬度，避免在寬螢幕太散 */
+            max-width: 1000px;
             margin: 0 auto;
-            padding: 60px 20px 40px 20px; /* 上方留白增加 */
+            padding: 60px 20px 40px 20px;
             position: relative;
-            display: flex;        /* 改用 Flex */
-            flex-direction: column;
-            align-items: center;  /* 水平置中 */
-        }
-
-        /* --- 右欄：內容包裹器 (現在是主要容器) --- */
-        .content-right-col {
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 100%;
         }
 
         /* --- 通用標題樣式 --- */
@@ -88,7 +79,7 @@
             text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         }
 
-        /* --- 自我介紹卡片樣式 --- */
+        /* --- 自我介紹卡片 --- */
         .profile-card {
             background: rgba(255, 255, 255, 0.5);
             padding: 40px;
@@ -111,7 +102,6 @@
             border: 6px solid #fff;
             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
             flex-shrink: 0;
-            cursor: zoom-in;
         }
 
         .profile-text {
@@ -123,7 +113,7 @@
             margin: 0 0 15px 0;
             color: #2c3e50;
             font-size: 2rem;
-            border-bottom: 2px solid #F58484; /* 加個底線裝飾 */
+            border-bottom: 2px solid #F58484;
             display: inline-block;
             padding-bottom: 5px;
         }
@@ -135,12 +125,12 @@
             line-height: 1.8;
         }
 
-        /* --- 動畫列表排版 (Flexbox) --- */
+        /* --- 動畫列表排版 --- */
         .members-grid {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 25px; /* 卡片間距 */
+            gap: 25px;
             width: 100%;
         }
 
@@ -155,22 +145,48 @@
             border-radius: 20px;
             opacity: 0;
             transform: translateY(30px);
-            transition: transform 0.3s ease;
+            transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            /* [調整] 電腦版一行三個，扣掉間距 */
             width: calc(33.333% - 20px); 
             min-width: 220px;
             box-sizing: border-box;
+            position: relative; /* 為了讓提示詞定位 */
+            cursor: pointer; /* 變成手指游標 */
+            overflow: hidden; /* 確保提示詞特效不溢出 */
         }
 
         .member-card:hover {
-            background: rgba(255, 255, 255, 0.7);
-            transform: translateY(-5px) !important;
+            background: rgba(255, 255, 255, 0.8);
+            transform: translateY(-10px) !important;
         }
 
-        /* 照片樣式 */
+        /* [新增] 點擊查看更多的提示遮罩 */
+        .click-hint {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 20px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            backdrop-filter: blur(2px);
+        }
+
+        .member-card:hover .click-hint {
+            opacity: 1;
+        }
+
         .member-photo {
-            width: 120px; /* 稍微加大 */
+            width: 120px;
             height: 120px;
             object-fit: cover;
             border-radius: 50%;
@@ -178,16 +194,6 @@
             border: 4px solid #fff;
             box-shadow: 0 4px 8px rgba(0,0,0,0.15);
             margin-bottom: 15px;
-            cursor: zoom-in;
-            transition: transform 0.2s ease;
-        }
-
-        .member-photo:hover {
-            transform: scale(1.1);
-        }
-
-        .member-info {
-            width: 100%;
         }
 
         .member-info h3 {
@@ -217,13 +223,13 @@
 
         .mid-image-container img {
             width: 100%;
-            max-width: 450px; /* 稍微縮小這張圖 */
+            max-width: 450px;
             height: auto;
             border-radius: 15px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-        /* --- 燈箱 (Lightbox) 樣式 --- */
+        /* --- [升級] 燈箱 (Lightbox) 樣式 --- */
         #lightbox {
             position: fixed;
             top: 0;
@@ -235,7 +241,6 @@
             justify-content: center;
             align-items: center;
             z-index: 10000;
-            cursor: zoom-out;
             opacity: 0;
             transition: opacity 0.3s ease;
         }
@@ -245,57 +250,139 @@
             opacity: 1;
         }
 
-        #lightbox img {
-            max-width: 90%;
-            max-height: 90%;
-            border: 5px solid white;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        /* 燈箱內容容器 */
+        .lightbox-content {
+            background: white;
+            width: 90%;
+            max-width: 900px;
+            /* 限制高度不超過視窗 90% */
+            max-height: 90vh; 
+            border-radius: 20px;
+            display: flex;
+            overflow: hidden; /* 防止圖片溢出圓角 */
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             animation: popIn 0.3s ease;
         }
 
+        /* 燈箱左側：圖片區 */
+        .lightbox-img-container {
+            flex: 1;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .lightbox-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 讓圖片填滿區域 */
+            max-height: 90vh; /* 確保不超過視窗 */
+        }
+
+        /* 燈箱右側：文字與音樂區 */
+        .lightbox-details {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow-y: auto; /* 如果文字太多可捲動 */
+        }
+
+        .lightbox-details h2 {
+            margin: 0 0 10px 0;
+            color: #F58484;
+            font-size: 2rem;
+            border-bottom: 3px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .lightbox-details h4 {
+            margin: 0 0 20px 0;
+            color: #888;
+            font-weight: normal;
+        }
+
+        .lightbox-details p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 30px;
+            text-align: justify;
+        }
+
+        /* 音樂播放器隱藏 (我們只聽聲音) 或者 縮小顯示 */
+        .yt-wrapper {
+            width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: auto; /* 推到底部 */
+        }
+        
+        .yt-label {
+            font-size: 0.9rem;
+            color: #999;
+            margin-bottom: 5px;
+        }
+
+        /* 關閉按鈕 */
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(0,0,0,0.1);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 24px;
+            color: #555;
+            transition: 0.2s;
+            z-index: 10;
+        }
+
+        .close-btn:hover {
+            background: #F58484;
+            color: white;
+        }
+
         /* --- RWD：手機版調整 --- */
-        @media (max-width: 900px) {
-            .container {
-                padding: 30px 20px;
-            }
-
-            /* 自我介紹卡片變直排 */
-            .profile-card {
-                flex-direction: column;
-                text-align: center;
-                gap: 20px;
-                padding: 30px;
-            }
-
-            .profile-text {
-                text-align: center;
-            }
-
-            .profile-text h2 {
-                font-size: 1.6rem;
-            }
-
-            .members-grid {
-                gap: 15px;
-            }
+        @media (max-width: 768px) {
+            .container { padding: 30px 20px; }
             
+            .profile-card { flex-direction: column; text-align: center; }
+            .profile-text { text-align: center; }
+
             .member-card {
-                width: 100%; /* 手機版佔滿一行 */
-                flex-direction: row; /* 改為橫式：圖左文右 */
+                width: 100%;
+                flex-direction: row;
                 text-align: left;
-                align-items: center;
-                gap: 20px;
             }
 
-            .member-photo {
-                width: 90px;
-                height: 90px;
-                margin-bottom: 0;
+            /* 手機版燈箱變直排 */
+            .lightbox-content {
+                flex-direction: column;
+                max-height: 95vh;
+                overflow-y: auto;
+            }
+
+            .lightbox-img-container {
+                height: 250px; /* 手機版圖片固定高度 */
+                flex: none;
             }
             
-            .intro-logo {
-                width: 80%;
+            .lightbox-details {
+                padding: 25px;
+            }
+            
+            .click-hint {
+                display: none; /* 手機版通常不顯示 hover 提示 */
             }
         }
     </style>
@@ -307,7 +394,22 @@
     </div>
 
     <div id="lightbox">
-        <img id="lightbox-img" src="" alt="放大圖片">
+        <div class="lightbox-content">
+            <div class="close-btn">&times;</div>
+            <div class="lightbox-img-container">
+                <img id="lightbox-img" src="" alt="詳細圖片">
+            </div>
+            <div class="lightbox-details">
+                <h2 id="lightbox-title">標題</h2>
+                <h4 id="lightbox-subtitle">副標題</h4>
+                <p id="lightbox-desc">這裡會顯示完整的介紹內容...</p>
+                
+                <div class="yt-label">♫ 背景音樂播放中</div>
+                <div class="yt-wrapper">
+                    <div id="yt-placeholder"></div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="container">
@@ -336,75 +438,125 @@
 
             <div class="members-grid">
                 
-                <div class="member-card anim-element">
+                <div class="member-card anim-element" 
+                     data-title="閃電十一人" 
+                     data-subtitle="電視兒童時期" 
+                     data-desc="這是關於一群熱愛足球少年的故事。圓堂守帶領著雷門中學足球社，從瀕臨廢社到稱霸全國，甚至挑戰世界。這部作品教會了我「永不放棄」的精神，以及夥伴之間無可取代的羈絆。"
+                     data-yt-id="Fq2j5F0e_5I"> <div class="click-hint">點擊查看更多</div>
                     <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/Inazuma_Eleven_logo.jpg" class="member-photo">
                     <div class="member-info">
                         <h3>閃電十一人</h3>
-                        <h5>電視兒童時期<br>每個人都有無限可能</h5>
+                        <h5>電視兒童時期</h5>
                     </div>
                 </div>
 
-                <div class="member-card anim-element">
+                <div class="member-card anim-element"
+                     data-title="影子籃球員" 
+                     data-subtitle="電視兒童時期" 
+                     data-desc="奇蹟世代的傳說與影子的故事。黑子哲也與火神大我的搭檔，挑戰過往的隊友。這部作品探討了天賦與努力的關係，以及什麼是真正的勝利。"
+                     data-yt-id="0R1j5p-gZ_I">
+                    
+                    <div class="click-hint">點擊查看更多</div>
                     <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/14185-p_230118.png" class="member-photo">
                     <div class="member-info">
                         <h3>影子籃球員</h3>
-                        <h5>電視兒童時期<br>探討生命的價值與重量</h5>
+                        <h5>電視兒童時期</h5>
                     </div>
                 </div>
 
-                <div class="member-card anim-element">
+                <div class="member-card anim-element"
+                     data-title="通靈王" 
+                     data-subtitle="電視兒童時期" 
+                     data-desc="為了成為通靈王，麻倉葉與夥伴們參加了通靈王大賽。雖然看似悠閒，但其實背負著沉重的命運。船到橋頭自然直，這句話影響了我很久。"
+                     data-yt-id="2d4a5z4e6r"> <div class="click-hint">點擊查看更多</div>
                     <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/Shaman_King.jpg" class="member-photo">
                     <div class="member-info">
                         <h3>通靈王</h3>
-                        <h5>電視兒童時期<br>了解人心與時間的旅程</h5>
+                        <h5>電視兒童時期</h5>
                     </div>
                 </div>
 
-                <div class="member-card anim-element">
+                <div class="member-card anim-element"
+                     data-title="怪化貓" 
+                     data-subtitle="3C兒童時期" 
+                     data-desc="賣藥郎斬妖除魔的故事，畫風極具特色，像浮世繪一般華麗。每一個單元劇都探討了人性的黑暗與執念，是藝術與劇情的完美結合。"
+                     data-yt-id="dummyID4">
+                     
+                    <div class="click-hint">點擊查看更多</div>
                     <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/Mononoke%2CAnimated_poster%2CFeb_2020.jpg" class="member-photo">
                     <div class="member-info">
                         <h3>怪化貓</h3>
-                        <h5>3C兒童時期<br>獨特浮世繪畫風</h5>
+                        <h5>3C兒童時期</h5>
                     </div>
                 </div>
 
-                <div class="member-card anim-element">
+                <div class="member-card anim-element"
+                     data-title="最遊記" 
+                     data-subtitle="3C兒童時期" 
+                     data-desc="顛覆傳統西遊記的設定，四個帥氣又暴力的角色前往西天取經。這不是關於信仰，而是關於「活著」的意義。準備好了嗎？要開槍了！"
+                     data-yt-id="dummyID5">
+
+                    <div class="click-hint">點擊查看更多</div>
                     <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/210111-saiyuki-01.jpg" class="member-photo">
                     <div class="member-info">
                         <h3>最遊記</h3>
-                        <h5>3C兒童時期<br>只有還沒輸，就還沒結束</h5>
+                        <h5>3C兒童時期</h5>
                     </div>
                 </div>
 
-                <div class="member-card anim-element">
+                <div class="member-card anim-element"
+                     data-title="隱瞞之事" 
+                     data-subtitle="3C兒童時期" 
+                     data-desc="一位畫黃色漫畫的爸爸，拼命對女兒隱瞞自己職業的故事。充滿笑料卻又無比溫馨，結局更是感人肺腑，描寫了深刻的親情。"
+                     data-yt-id="dummyID6">
+
+                    <div class="click-hint">點擊查看更多</div>
                     <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/Kakushigoto_Key_Visual.jpeg" class="member-photo">
                     <div class="member-info">
                         <h3>隱瞞之事</h3>
-                        <h5>3C兒童時期<br>充滿愛的家庭故事</h5>
+                        <h5>3C兒童時期</h5>
                     </div>
                 </div>
 
-                <div class="member-card anim-element">
-                    <img src="https://upload.wikimedia.org/wikipedia/zh/thumb/6/6f/Uramichi_Oniisan_Key_Visual.png/375px-Uramichi_Oniisan_Key_Visual.png" class="member-photo"> 
+                <div class="member-card anim-element"
+                     data-title="陰晴不定的體操哥哥" 
+                     data-subtitle="略老宅宅" 
+                     data-desc="表面陽光的兒童節目體操哥哥，內心卻充滿了社會人的厭世與黑暗。這是一部獻給被社會摧殘的大人們的黑色幽默喜劇。"
+                     data-yt-id="dummyID7">
+
+                    <div class="click-hint">點擊查看更多</div>
+                    <img src="https://upload.wikimedia.org/wikipedia/zh/thumb/6/6f/Uramichi_Oniisan_Key_Visual.png/375px-Uramichi_Oniisan_Key_Visual.png" class="member-photo">
                     <div class="member-info">
                         <h3>陰晴不定的體操哥哥</h3>
-                        <h5>略老宅宅<br>大人的崩潰日常</h5>
+                        <h5>略老宅宅</h5>
                     </div>
                 </div>
 
-                <div class="member-card anim-element">
+                <div class="member-card anim-element"
+                     data-title="異度侵入" 
+                     data-subtitle="略老宅宅" 
+                     data-desc="潛入殺人犯的潛意識「井」中進行推理。設定新穎，邏輯縝密，劇本非常強大。神探酒井戶的每一次解謎都讓人嘆為觀止。"
+                     data-yt-id="dummyID8">
+
+                    <div class="click-hint">點擊查看更多</div>
                     <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/ID_INVADED_anime.jpg" class="member-photo">
                     <div class="member-info">
                         <h3>異度侵入</h3>
-                        <h5>略老宅宅<br>神作等級的劇本</h5>
+                        <h5>略老宅宅</h5>
                     </div>
                 </div>
 
-                <div class="member-card anim-element">
+                <div class="member-card anim-element"
+                     data-title="出入禁止的鼴鼠" 
+                     data-subtitle="略老宅宅" 
+                     data-desc="講述在世間徘徊的怪人與被捲入事件的人們。充滿了都市傳說色彩與奇幻風格的冒險故事。"
+                     data-yt-id="dummyID9">
+
+                    <div class="click-hint">點擊查看更多</div>
                     <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/4d4aecc0f4c49ca490abd99f841tvy65.jpg" class="member-photo">
                     <div class="member-info">
                         <h3>出入禁止的鼴鼠</h3>
-                        <h5>略老宅宅<br>都市傳說冒險</h5>
+                        <h5>略老宅宅</h5>
                     </div>
                 </div>
 
@@ -419,49 +571,9 @@
     </div>
 
     <script>
+        // 開場動畫移除邏輯
         setTimeout(() => {
             const intro = document.getElementById("intro");
             if (intro) intro.remove();
 
             const elements = document.querySelectorAll(".anim-element");
-            elements.forEach((el, index) => {
-                setTimeout(() => {
-                    el.style.animation = "popup-up 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards";
-                }, index * 150);
-            });
-
-        }, 2500);
-
-        // Lightbox Logic
-        const memberPhotos = document.querySelectorAll('.member-photo, .profile-img');
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImg = document.getElementById('lightbox-img');
-
-        memberPhotos.forEach(photo => {
-            photo.addEventListener('click', () => {
-                 lightboxImg.src = photo.src;
-                 lightbox.style.display = 'flex';
-                 setTimeout(() => {
-                    lightbox.classList.add('active');
-                 }, 10);
-            });
-        });
-
-        lightbox.addEventListener('click', () => {
-            lightbox.classList.remove('active');
-            setTimeout(() => {
-                lightbox.style.display = 'none';
-            }, 300);
-        });
-    </script>
-    
-    <style>
-        @keyframes popup {
-            to { opacity: 1; transform: scale(1); }
-        }
-        @keyframes popup-up {
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-    </style>
-</body>
-</html>
