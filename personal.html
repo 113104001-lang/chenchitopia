@@ -366,4 +366,399 @@
             font-size: 1.1rem;
             line-height: 1.8;
             color: #555;
-            margin-
+            margin-bottom: 30px;
+            text-align: justify;
+        }
+
+        .yt-wrapper {
+            width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: auto;
+        }
+        
+        .yt-label {
+            font-size: 0.9rem;
+            color: #999;
+            margin-bottom: 5px;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(0,0,0,0.1);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 24px;
+            color: #555;
+            transition: 0.2s;
+            z-index: 10;
+        }
+
+        .close-btn:hover {
+            background: #F58484;
+            color: white;
+        }
+
+        /* --- RWD：手機版調整 --- */
+        @media (max-width: 768px) {
+            .container { padding: 30px 20px; }
+            
+            .profile-card { flex-direction: column; text-align: center; align-items: center; }
+            .profile-text { text-align: center; }
+
+            .social-links { justify-content: center; }
+
+            .member-card {
+                width: 100%;
+                flex-direction: row;
+                text-align: left;
+            }
+            
+            .member-photo {
+                max-height: 180px;
+                margin-bottom: 15px;
+            }
+
+            .lightbox-content {
+                flex-direction: column;
+                max-height: 95vh;
+                overflow-y: auto;
+            }
+
+            .lightbox-img-container {
+                height: 250px;
+                flex: none;
+            }
+            
+            .lightbox-details {
+                padding: 25px;
+            }
+            
+            .click-hint {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="intro">
+        <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/%E6%88%91%E6%98%AF%E8%AA%B0.png" class="intro-logo" alt="Opening Logo">
+    </div>
+
+    <div id="lightbox">
+        <div class="lightbox-content">
+            <div class="close-btn">×</div>
+            <div class="lightbox-img-container">
+                <img id="lightbox-img" src="" alt="詳細圖片">
+            </div>
+            <div class="lightbox-details">
+                <h2 id="lightbox-title">標題</h2>
+                <h4 id="lightbox-subtitle">副標題</h4>
+                <p id="lightbox-desc">這裡會顯示完整的介紹內容...</p>
+                
+                <div class="yt-label">♫ 相關影音 (自動播放中)</div>
+                <div class="yt-wrapper">
+                    <div id="yt-placeholder"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        
+        <div class="content-right-col">
+            
+            <div class="section-title anim-element">
+                <h1>自我介紹</h1>
+            </div>
+
+            <div class="profile-card anim-element">
+                <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/20251205_215609(1).jpg" class="profile-img" alt="Profile Picture">
+                <div class="profile-text">
+                    <h2>我是誰？</h2>
+                    <p>
+                        你好！歡迎來到我的個人網站。我是一名熱愛設計與程式開發的學生。<br>
+                        這個網站展示了我喜愛的動畫作品以及我的個人風格。<br>
+                        我喜歡探索新事物，就像這些動畫中的角色一樣，充滿冒險精神。
+                    </p>
+                    
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/q___.12345.___p/" target="_blank" class="social-btn" title="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://github.com/113104001-lang" target="_blank" class="social-btn" title="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="mailto:113104001@g.nccu.edu.tw" class="social-btn" title="Email">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-title anim-element">
+                <h1>動畫介紹</h1>
+            </div>
+
+            <div class="members-grid">
+                
+                <div class="member-card anim-element" 
+                     data-title="閃電十一人" 
+                     data-subtitle="電視兒童時期" 
+                     data-desc="這是關於一群熱愛足球少年的故事。圓堂守帶領著雷門中學足球社，從瀕臨廢社到稱霸全國，甚至挑戰世界。這部作品教會了我「永不放棄」的精神，以及夥伴之間無可取代的羈絆。"
+                     data-yt-id="y-vmhUs-iNw"> 
+                    <div class="click-hint">點擊查看更多</div>
+                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/Inazuma_Eleven_logo.jpg" class="member-photo">
+                    <div class="member-info">
+                        <h3>閃電十一人</h3>
+                        <h5>電視兒童時期</h5>
+                    </div>
+                </div>
+
+                <div class="member-card anim-element"
+                     data-title="影子籃球員" 
+                     data-subtitle="電視兒童時期" 
+                     data-desc="奇蹟世代的傳說與影子的故事。黑子哲也與火神大我的搭檔，挑戰過往的隊友。這部作品探討了天賦與努力的關係，以及什麼是真正的勝利。"
+                     data-yt-id="ZKEgXKp__sM">
+                    <div class="click-hint">點擊查看更多</div>
+                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/14185-p_230118.png" class="member-photo">
+                    <div class="member-info">
+                        <h3>影子籃球員</h3>
+                        <h5>電視兒童時期</h5>
+                    </div>
+                </div>
+
+                <div class="member-card anim-element"
+                     data-title="通靈王" 
+                     data-subtitle="電視兒童時期" 
+                     data-desc="為了成為通靈王，麻倉葉與夥伴們參加了通靈王大賽。雖然看似悠閒，但其實背負著沉重的命運。船到橋頭自然直，這句話影響了我很久。"
+                     data-yt-id="ZGW1R6Mpz8Y"> 
+                    <div class="click-hint">點擊查看更多</div>
+                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/Shaman_King.jpg" class="member-photo">
+                    <div class="member-info">
+                        <h3>通靈王</h3>
+                        <h5>電視兒童時期</h5>
+                    </div>
+                </div>
+
+                <div class="member-card anim-element"
+                     data-title="怪化貓" 
+                     data-subtitle="3C兒童時期" 
+                     data-desc="賣藥郎斬妖除魔的故事，畫風極具特色，像浮世繪一般華麗。每一個單元劇都探討了人性的黑暗與執念，是藝術與劇情的完美結合。"
+                     data-yt-id="DSXiYPW98I8">
+                    <div class="click-hint">點擊查看更多</div>
+                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/Mononoke%2CAnimated_poster%2CFeb_2020.jpg" class="member-photo">
+                    <div class="member-info">
+                        <h3>怪化貓</h3>
+                        <h5>3C兒童時期</h5>
+                    </div>
+                </div>
+
+                <div class="member-card anim-element"
+                     data-title="最遊記" 
+                     data-subtitle="3C兒童時期" 
+                     data-desc="顛覆傳統西遊記的設定，四個帥氣又暴力的角色前往西天取經。這不是關於信仰，而是關於「活著」的意義。準備好了嗎？要開槍了！"
+                     data-yt-id="qr26Mjix6qY">
+                    <div class="click-hint">點擊查看更多</div>
+                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/210111-saiyuki-01.jpg" class="member-photo">
+                    <div class="member-info">
+                        <h3>最遊記</h3>
+                        <h5>3C兒童時期</h5>
+                    </div>
+                </div>
+
+                <div class="member-card anim-element"
+                     data-title="隱瞞之事" 
+                     data-subtitle="3C兒童時期" 
+                     data-desc="一位畫黃色漫畫的爸爸，拼命對女兒隱瞞自己職業的故事。充滿笑料卻又無比溫馨，結局更是感人肺腑，描寫了深刻的親情。"
+                     data-yt-id="cHYeFFGcjdc">
+                    <div class="click-hint">點擊查看更多</div>
+                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/Kakushigoto_Key_Visual.jpeg" class="member-photo">
+                    <div class="member-info">
+                        <h3>隱瞞之事</h3>
+                        <h5>3C兒童時期</h5>
+                    </div>
+                </div>
+
+                <div class="member-card anim-element"
+                     data-title="陰晴不定的體操哥哥" 
+                     data-subtitle="略老宅宅" 
+                     data-desc="表面陽光的兒童節目體操哥哥，內心卻充滿了社會人的厭世與黑暗。這是一部獻給被社會摧殘的大人們的黑色幽默喜劇。"
+                     data-yt-id="O8Dj2zXEhW0">
+                    <div class="click-hint">點擊查看更多</div>
+                    <img src="https://upload.wikimedia.org/wikipedia/zh/thumb/6/6f/Uramichi_Oniisan_Key_Visual.png/375px-Uramichi_Oniisan_Key_Visual.png" class="member-photo">
+                    <div class="member-info">
+                        <h3>陰晴不定的體操哥哥</h3>
+                        <h5>略老宅宅</h5>
+                    </div>
+                </div>
+
+                <div class="member-card anim-element"
+                     data-title="異度侵入" 
+                     data-subtitle="略老宅宅" 
+                     data-desc="潛入殺人犯的潛意識「井」中進行推理。設定新穎，邏輯縝密，劇本非常強大。神探酒井戶的每一次解謎都讓人嘆為觀止。"
+                     data-yt-id="xjFKGqNIPEA">
+                    <div class="click-hint">點擊查看更多</div>
+                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/ID_INVADED_anime.jpg" class="member-photo">
+                    <div class="member-info">
+                        <h3>異度侵入</h3>
+                        <h5>略老宅宅</h5>
+                    </div>
+                </div>
+
+                <div class="member-card anim-element"
+                     data-title="出入禁止的鼴鼠" 
+                     data-subtitle="略老宅宅" 
+                     data-desc="講述在世間徘徊的怪人與被捲入事件的人們。充滿了都市傳說色彩與奇幻風格的冒險故事。"
+                     data-yt-id="i0XigEENjpM">
+                    <div class="click-hint">點擊查看更多</div>
+                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/4d4aecc0f4c49ca490abd99f841tvy65.jpg" class="member-photo">
+                    <div class="member-info">
+                        <h3>出入禁止的鼴鼠</h3>
+                        <h5>略老宅宅</h5>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="section-title anim-element">
+                <h1>其他坑事務</h1>
+            </div>
+
+            <div class="members-grid">
+                
+                <div class="member-card anim-element"
+                     data-title="Super Junior" 
+                     data-subtitle="追星 / 韓流帝王" 
+                     data-desc="我的本命團體！他們不只是偶像，更是綜藝之神。從 Sorry Sorry 到現在，即使變成「老少年」，舞台魅力依然不減，特別是演唱會上的 Talk 環節比唱歌還精彩！"
+                     data-yt-id="8KyG72ndM8c"> 
+                    <div class="click-hint">點擊查看更多</div>
+                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/2025-07-0920taiwan20SUPERE7AC8DE48CBCE6A3A6E588BCE38ASuperE38BAEE5B385%25A71.webp" class="member-photo">
+                    <div class="member-info">
+                        <h3>Super Junior</h3>
+                        <h5>追星</h5>
+                    </div>
+                </div>
+
+                <div class="member-card anim-element"
+                     data-title="羽生結弦" 
+                     data-subtitle="追冰演 / 花滑王子" 
+                     data-desc="他不僅是兩屆奧運金牌得主，更是將花式滑冰昇華為藝術的藝術家。轉為職業選手後，他的冰演總是能帶給觀眾極致的視覺與聽覺饗宴，每一個節目都充滿了靈魂。"
+                     data-yt-id="23EfsN7vEOA"> 
+                    <div class="click-hint">點擊查看更多</div>
+                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/d3121765.jpg" class="member-photo">
+                    <div class="member-info">
+                        <h3>羽生結弦</h3>
+                        <h5>追冰演</h5>
+                    </div>
+                </div>
+
+                <div class="member-card anim-element"
+                     data-title="厭世醫師阿萬" 
+                     data-subtitle="追V / 醫療迷因" 
+                     data-desc="透過迷因與幽默的方式，分享醫療現場的崩潰日常。他的地獄梗總是能精準戳中笑點（雖然有時候笑著笑著就哭了），是下班後放鬆心情的最佳良藥。"
+                     data-yt-id="s5qJ8v-4tT0"> 
+                    <div class="click-hint">點擊查看更多</div>
+                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/channels4_profile.jpg" class="member-photo">
+                    <div class="member-info">
+                        <h3>厭世醫師阿萬</h3>
+                        <h5>追 V</h5>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="mid-image-container anim-element">
+                <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/%E6%94%BF%E5%A4%A7%E6%96%B9%E5%9F%8E%E5%B8%82.png" alt="政大方城市">
+            </div>
+
+        </div>
+
+    </div>
+
+    <footer>
+        <p>Copyright © 2025 政大方城市. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        setTimeout(() => {
+            const intro = document.getElementById("intro");
+            if (intro) intro.remove();
+
+            const elements = document.querySelectorAll(".anim-element");
+            elements.forEach((el, index) => {
+                setTimeout(() => {
+                    el.style.animation = "popup-up 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards";
+                }, index * 150);
+            });
+        }, 2500);
+
+        const memberCards = document.querySelectorAll('.member-card');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxTitle = document.getElementById('lightbox-title');
+        const lightboxSubtitle = document.getElementById('lightbox-subtitle');
+        const lightboxDesc = document.getElementById('lightbox-desc');
+        const ytPlaceholder = document.getElementById('yt-placeholder');
+        const closeBtn = document.querySelector('.close-btn');
+
+        memberCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const imgUrl = card.querySelector('.member-photo').src;
+                const title = card.getAttribute('data-title');
+                const subtitle = card.getAttribute('data-subtitle');
+                const desc = card.getAttribute('data-desc');
+                const ytId = card.getAttribute('data-yt-id');
+
+                lightboxImg.src = imgUrl;
+                lightboxTitle.textContent = title;
+                lightboxSubtitle.textContent = subtitle;
+                lightboxDesc.textContent = desc;
+
+                if (ytId && ytId !== "dummyID") {
+                    ytPlaceholder.innerHTML = `<iframe width="100%" height="200" src="https://www.youtube.com/embed/${ytId}?autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+                } else {
+                    ytPlaceholder.innerHTML = "<p style='color:#ccc; text-align:center;'>無音樂連結</p>";
+                }
+
+                lightbox.style.display = 'flex';
+                setTimeout(() => {
+                    lightbox.classList.add('active');
+                }, 10);
+            });
+        });
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            setTimeout(() => {
+                lightbox.style.display = 'none';
+                ytPlaceholder.innerHTML = ""; 
+            }, 300);
+        }
+
+        closeBtn.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+    </script>
+    
+    <style>
+        @keyframes popup {
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes popup-up {
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+    </style>
+</body>
+</html>
