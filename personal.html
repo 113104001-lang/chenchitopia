@@ -1,4 +1,5 @@
-763<html lang="zh-TW">
+<!DOCTYPE html>
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -58,12 +59,20 @@
             align-items: center;
         }
 
+        /* --- 右欄：內容包裹器 --- */
+        .content-right-col {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
         /* --- 通用標題樣式 --- */
         .section-title {
             background-color: #F58484;
             padding: 10px 40px;
             border-radius: 50px;
-            margin: 30px auto 30px auto;
+            margin: 50px auto 30px auto;
             text-align: center;
             width: fit-content;
             opacity: 0;
@@ -78,7 +87,7 @@
             text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         }
 
-        /* --- 自我介紹卡片 --- */
+        /* --- 自我介紹卡片樣式 --- */
         .profile-card {
             background: rgba(255, 255, 255, 0.5);
             padding: 40px;
@@ -124,7 +133,7 @@
             line-height: 1.8;
         }
 
-        /* --- 動畫列表排版 --- */
+        /* --- 列表排版 (Flexbox) --- */
         .members-grid {
             display: flex;
             flex-wrap: wrap;
@@ -133,7 +142,7 @@
             width: 100%;
         }
 
-        /* 動畫/成員卡片樣式 */
+        /* 卡片樣式 */
         .member-card {
             display: flex;
             flex-direction: column;
@@ -149,9 +158,9 @@
             width: calc(33.333% - 20px); 
             min-width: 220px;
             box-sizing: border-box;
-            position: relative; /* 為了讓提示詞定位 */
-            cursor: pointer; /* 變成手指游標 */
-            overflow: hidden; /* 確保提示詞特效不溢出 */
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
         }
 
         .member-card:hover {
@@ -159,7 +168,7 @@
             transform: translateY(-10px) !important;
         }
 
-        /* [新增] 點擊查看更多的提示遮罩 */
+        /* 點擊查看更多的提示遮罩 */
         .click-hint {
             position: absolute;
             top: 0;
@@ -178,12 +187,14 @@
             font-size: 1.2rem;
             letter-spacing: 2px;
             backdrop-filter: blur(2px);
+            pointer-events: none;
         }
 
         .member-card:hover .click-hint {
             opacity: 1;
         }
 
+        /* 照片樣式 */
         .member-photo {
             width: 120px;
             height: 120px;
@@ -228,7 +239,7 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-        /* --- [升級] 燈箱 (Lightbox) 樣式 --- */
+        /* --- 燈箱 (Lightbox) 樣式 --- */
         #lightbox {
             position: fixed;
             top: 0;
@@ -249,22 +260,19 @@
             opacity: 1;
         }
 
-        /* 燈箱內容容器 */
         .lightbox-content {
             background: white;
             width: 90%;
             max-width: 900px;
-            /* 限制高度不超過視窗 90% */
             max-height: 90vh; 
             border-radius: 20px;
             display: flex;
-            overflow: hidden; /* 防止圖片溢出圓角 */
+            overflow: hidden;
             position: relative;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             animation: popIn 0.3s ease;
         }
 
-        /* 燈箱左側：圖片區 */
         .lightbox-img-container {
             flex: 1;
             background: #f0f0f0;
@@ -277,18 +285,17 @@
         .lightbox-img-container img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* 讓圖片填滿區域 */
-            max-height: 90vh; /* 確保不超過視窗 */
+            object-fit: cover; 
+            max-height: 90vh; 
         }
 
-        /* 燈箱右側：文字與音樂區 */
         .lightbox-details {
             flex: 1;
             padding: 40px;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            overflow-y: auto; /* 如果文字太多可捲動 */
+            overflow-y: auto;
         }
 
         .lightbox-details h2 {
@@ -313,12 +320,11 @@
             text-align: justify;
         }
 
-        /* 音樂播放器隱藏 (我們只聽聲音) 或者 縮小顯示 */
         .yt-wrapper {
             width: 100%;
             border-radius: 10px;
             overflow: hidden;
-            margin-top: auto; /* 推到底部 */
+            margin-top: auto;
         }
         
         .yt-label {
@@ -327,7 +333,6 @@
             margin-bottom: 5px;
         }
 
-        /* 關閉按鈕 */
         .close-btn {
             position: absolute;
             top: 20px;
@@ -364,7 +369,6 @@
                 text-align: left;
             }
 
-            /* 手機版燈箱變直排 */
             .lightbox-content {
                 flex-direction: column;
                 max-height: 95vh;
@@ -372,7 +376,7 @@
             }
 
             .lightbox-img-container {
-                height: 250px; /* 手機版圖片固定高度 */
+                height: 250px;
                 flex: none;
             }
             
@@ -381,7 +385,7 @@
             }
             
             .click-hint {
-                display: none; /* 手機版通常不顯示 hover 提示 */
+                display: none;
             }
         }
     </style>
@@ -403,7 +407,7 @@
                 <h4 id="lightbox-subtitle">副標題</h4>
                 <p id="lightbox-desc">這裡會顯示完整的介紹內容...</p>
                 
-                <div class="yt-label">♫ 背景音樂播放中</div>
+                <div class="yt-label">♫ 相關影音 (自動播放中)</div>
                 <div class="yt-wrapper">
                     <div id="yt-placeholder"></div>
                 </div>
@@ -441,7 +445,8 @@
                      data-title="閃電十一人" 
                      data-subtitle="電視兒童時期" 
                      data-desc="這是關於一群熱愛足球少年的故事。圓堂守帶領著雷門中學足球社，從瀕臨廢社到稱霸全國，甚至挑戰世界。這部作品教會了我「永不放棄」的精神，以及夥伴之間無可取代的羈絆。"
-                     data-yt-id="y-vmhUs-iNw"> <div class="click-hint">點擊查看更多</div>
+                     data-yt-id="y-vmhUs-iNw"> 
+                    <div class="click-hint">點擊查看更多</div>
                     <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/Inazuma_Eleven_logo.jpg" class="member-photo">
                     <div class="member-info">
                         <h3>閃電十一人</h3>
@@ -453,9 +458,7 @@
                      data-title="影子籃球員" 
                      data-subtitle="電視兒童時期" 
                      data-desc="奇蹟世代的傳說與影子的故事。黑子哲也與火神大我的搭檔，挑戰過往的隊友。這部作品探討了天賦與努力的關係，以及什麼是真正的勝利。"
-                     data-yt-id="ZKEgXKp__sM&list">
-                    
-                    <div class="click-hint">點擊查看更多</div>
+                     data-yt-id="ZKEgXKp__sM"> <div class="click-hint">點擊查看更多</div>
                     <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/14185-p_230118.png" class="member-photo">
                     <div class="member-info">
                         <h3>影子籃球員</h3>
@@ -467,7 +470,8 @@
                      data-title="通靈王" 
                      data-subtitle="電視兒童時期" 
                      data-desc="為了成為通靈王，麻倉葉與夥伴們參加了通靈王大賽。雖然看似悠閒，但其實背負著沉重的命運。船到橋頭自然直，這句話影響了我很久。"
-                     data-yt-id="ZGW1R6Mpz8Y"> <div class="click-hint">點擊查看更多</div>
+                     data-yt-id="ZGW1R6Mpz8Y"> 
+                    <div class="click-hint">點擊查看更多</div>
                     <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/Shaman_King.jpg" class="member-photo">
                     <div class="member-info">
                         <h3>通靈王</h3>
@@ -480,7 +484,6 @@
                      data-subtitle="3C兒童時期" 
                      data-desc="賣藥郎斬妖除魔的故事，畫風極具特色，像浮世繪一般華麗。每一個單元劇都探討了人性的黑暗與執念，是藝術與劇情的完美結合。"
                      data-yt-id="DSXiYPW98I8">
-                     
                     <div class="click-hint">點擊查看更多</div>
                     <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/Mononoke%2CAnimated_poster%2CFeb_2020.jpg" class="member-photo">
                     <div class="member-info">
@@ -494,7 +497,6 @@
                      data-subtitle="3C兒童時期" 
                      data-desc="顛覆傳統西遊記的設定，四個帥氣又暴力的角色前往西天取經。這不是關於信仰，而是關於「活著」的意義。準備好了嗎？要開槍了！"
                      data-yt-id="qr26Mjix6qY">
-
                     <div class="click-hint">點擊查看更多</div>
                     <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/210111-saiyuki-01.jpg" class="member-photo">
                     <div class="member-info">
@@ -508,7 +510,6 @@
                      data-subtitle="3C兒童時期" 
                      data-desc="一位畫黃色漫畫的爸爸，拼命對女兒隱瞞自己職業的故事。充滿笑料卻又無比溫馨，結局更是感人肺腑，描寫了深刻的親情。"
                      data-yt-id="cHYeFFGcjdc">
-
                     <div class="click-hint">點擊查看更多</div>
                     <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/Kakushigoto_Key_Visual.jpeg" class="member-photo">
                     <div class="member-info">
@@ -521,8 +522,7 @@
                      data-title="陰晴不定的體操哥哥" 
                      data-subtitle="略老宅宅" 
                      data-desc="表面陽光的兒童節目體操哥哥，內心卻充滿了社會人的厭世與黑暗。這是一部獻給被社會摧殘的大人們的黑色幽默喜劇。"
-                       data-yt-id="O8Dj2zXEhW0&list">              >
-
+                     data-yt-id="O8Dj2zXEhW0"> 
                     <div class="click-hint">點擊查看更多</div>
                     <img src="https://upload.wikimedia.org/wikipedia/zh/thumb/6/6f/Uramichi_Oniisan_Key_Visual.png/375px-Uramichi_Oniisan_Key_Visual.png" class="member-photo">
                     <div class="member-info">
@@ -536,7 +536,6 @@
                      data-subtitle="略老宅宅" 
                      data-desc="潛入殺人犯的潛意識「井」中進行推理。設定新穎，邏輯縝密，劇本非常強大。神探酒井戶的每一次解謎都讓人嘆為觀止。"
                      data-yt-id="xjFKGqNIPEA">
-
                     <div class="click-hint">點擊查看更多</div>
                     <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/ID_INVADED_anime.jpg" class="member-photo">
                     <div class="member-info">
@@ -550,12 +549,57 @@
                      data-subtitle="略老宅宅" 
                      data-desc="講述在世間徘徊的怪人與被捲入事件的人們。充滿了都市傳說色彩與奇幻風格的冒險故事。"
                      data-yt-id="i0XigEENjpM">
-
                     <div class="click-hint">點擊查看更多</div>
                     <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/4d4aecc0f4c49ca490abd99f841tvy65.jpg" class="member-photo">
                     <div class="member-info">
                         <h3>出入禁止的鼴鼠</h3>
                         <h5>略老宅宅</h5>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="section-title anim-element">
+                <h1>其他坑事務</h1>
+            </div>
+
+            <div class="members-grid">
+                
+                <div class="member-card anim-element"
+                     data-title="Super Junior" 
+                     data-subtitle="追星 / 韓流帝王" 
+                     data-desc="我的本命團體！他們不只是偶像，更是綜藝之神。從 Sorry Sorry 到現在，即使變成「老少年」，舞台魅力依然不減，特別是演唱會上的 Talk 環節比唱歌還精彩！"
+                     data-yt-id="8KyG72ndM8c"> 
+                    <div class="click-hint">點擊查看更多</div>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Super_Junior_at_KCON_2015_in_Los_Angeles.jpg/640px-Super_Junior_at_KCON_2015_in_Los_Angeles.jpg" class="member-photo">
+                    <div class="member-info">
+                        <h3>Super Junior</h3>
+                        <h5>追星</h5>
+                    </div>
+                </div>
+
+                <div class="member-card anim-element"
+                     data-title="羽生結弦" 
+                     data-subtitle="追冰演 / 花滑王子" 
+                     data-desc="他不僅是兩屆奧運金牌得主，更是將花式滑冰昇華為藝術的藝術家。轉為職業選手後，他的冰演總是能帶給觀眾極致的視覺與聽覺饗宴，每一個節目都充滿了靈魂。"
+                     data-yt-id="23EfsN7vEOA"> 
+                    <div class="click-hint">點擊查看更多</div>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Hanyu_Yuzuru_2019_Grand_Prix_Final_EF_3.jpg/440px-Hanyu_Yuzuru_2019_Grand_Prix_Final_EF_3.jpg" class="member-photo">
+                    <div class="member-info">
+                        <h3>羽生結弦</h3>
+                        <h5>追冰演</h5>
+                    </div>
+                </div>
+
+                <div class="member-card anim-element"
+                     data-title="厭世醫師阿萬" 
+                     data-subtitle="追V / 醫療迷因" 
+                     data-desc="透過迷因與幽默的方式，分享醫療現場的崩潰日常。他的地獄梗總是能精準戳中笑點（雖然有時候笑著笑著就哭了），是下班後放鬆心情的最佳良藥。"
+                     data-yt-id="s5qJ8v-4tT0"> <div class="click-hint">點擊查看更多</div>
+                    <img src="https://yt3.googleusercontent.com/ytc/AIdro_kXy5r7gVd7qXo_zQ9Q9Q9Q9Q9Q9Q9Q9Q9Q9Q=s900-c-k-c0x00ffffff-no-rj" class="member-photo">
+                    <div class="member-info">
+                        <h3>厭世醫師阿萬</h3>
+                        <h5>追 V</h5>
                     </div>
                 </div>
 
@@ -570,9 +614,82 @@
     </div>
 
     <script>
-        // 開場動畫移除邏輯
+        // 開場動畫 & 元素浮現動畫
         setTimeout(() => {
             const intro = document.getElementById("intro");
             if (intro) intro.remove();
 
             const elements = document.querySelectorAll(".anim-element");
+            elements.forEach((el, index) => {
+                setTimeout(() => {
+                    el.style.animation = "popup-up 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards";
+                }, index * 150);
+            });
+        }, 2500);
+
+        // Lightbox Logic (控制燈箱與音樂)
+        const memberCards = document.querySelectorAll('.member-card');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxTitle = document.getElementById('lightbox-title');
+        const lightboxSubtitle = document.getElementById('lightbox-subtitle');
+        const lightboxDesc = document.getElementById('lightbox-desc');
+        const ytPlaceholder = document.getElementById('yt-placeholder');
+        const closeBtn = document.querySelector('.close-btn');
+
+        memberCards.forEach(card => {
+            card.addEventListener('click', () => {
+                // 1. 抓取資料
+                const imgUrl = card.querySelector('.member-photo').src;
+                const title = card.getAttribute('data-title');
+                const subtitle = card.getAttribute('data-subtitle');
+                const desc = card.getAttribute('data-desc');
+                const ytId = card.getAttribute('data-yt-id');
+
+                // 2. 填入燈箱
+                lightboxImg.src = imgUrl;
+                lightboxTitle.textContent = title;
+                lightboxSubtitle.textContent = subtitle;
+                lightboxDesc.textContent = desc;
+
+                // 3. 處理影片 (有 ID 才顯示 iframe)
+                if (ytId && ytId !== "dummyID") {
+                    ytPlaceholder.innerHTML = `<iframe width="100%" height="200" src="https://www.youtube.com/embed/${ytId}?autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+                } else {
+                    ytPlaceholder.innerHTML = "<p style='color:#ccc; text-align:center;'>無音樂連結</p>";
+                }
+
+                // 4. 開啟燈箱
+                lightbox.style.display = 'flex';
+                setTimeout(() => {
+                    lightbox.classList.add('active');
+                }, 10);
+            });
+        });
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            setTimeout(() => {
+                lightbox.style.display = 'none';
+                ytPlaceholder.innerHTML = ""; // 關閉時清空 iframe 以停止音樂
+            }, 300);
+        }
+
+        closeBtn.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+    </script>
+    
+    <style>
+        @keyframes popup {
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes popup-up {
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+    </style>
+</body>
+</html>
