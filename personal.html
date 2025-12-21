@@ -8,13 +8,15 @@
     <style>
         /* --- 基礎設定 --- */
         body {
-            background-image: linear-gradient(210deg, #F5E880, #F5D280);
+            /* [修改] 背景顏色：改為柔和米色系渐层 */
+            background-image: linear-gradient(135deg, #FFF8E1 0%, #FFECB3 100%);
             min-height: 100vh;
             margin: 0;
             font-family: "Microsoft JhengHei", sans-serif;
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
+            color: #444; /* 文字顏色稍微加深 */
         }
 
         /* --- 開場動畫區塊 --- */
@@ -72,7 +74,8 @@
 
         /* --- 通用標題樣式 --- */
         .section-title {
-            background-color: #F58484;
+            /* [修改] 標題背景色：改為深珊瑚色 */
+            background-color: #E57373; 
             padding: 10px 40px;
             border-radius: 50px;
             margin: 50px auto 30px auto;
@@ -80,7 +83,7 @@
             width: fit-content;
             opacity: 0;
             transform: scale(0.8);
-            box-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15); /* 陰影稍微加強 */
         }
         
         .section-title h1 {
@@ -92,20 +95,21 @@
 
         /* --- 自我介紹卡片樣式 --- */
         .profile-card {
-            background: rgba(255, 255, 255, 0.5);
+            /* [修改] 卡片背景色：改為半透明白色 */
+            background: rgba(255, 255, 255, 0.7); 
             padding: 40px;
             border-radius: 20px;
             display: flex;
-            align-items: flex-start; /* 上方對齊 */
+            align-items: flex-start; 
             gap: 40px;
             width: 100%;
             box-sizing: border-box;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08); /* 陰影稍微加深 */
             opacity: 0;
             transform: translateY(20px);
         }
 
-        /* 自我介紹圖片：自動比例 */
+        /* 自我介紹圖片 */
         .profile-img {
             width: 100%;
             max-width: 250px;
@@ -114,7 +118,7 @@
             border: 6px solid #fff;
             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
             flex-shrink: 0;
-            object-fit: contain; /* 確保圖片完整 */
+            object-fit: contain; 
         }
 
         .profile-text {
@@ -126,7 +130,8 @@
             margin: 0 0 15px 0;
             color: #2c3e50;
             font-size: 2rem;
-            border-bottom: 2px solid #F58484;
+            /* [修改] 標題底線顏色 */
+            border-bottom: 3px solid #E57373; 
             display: inline-block;
             padding-bottom: 5px;
         }
@@ -161,7 +166,8 @@
         }
 
         .social-btn:hover {
-            background-color: #F58484;
+            /* [修改] 按鈕 hover 顏色 */
+            background-color: #E57373; 
             transform: translateY(-5px);
             box-shadow: 0 6px 12px rgba(0,0,0,0.2);
         }
@@ -181,13 +187,14 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
-            background: rgba(255, 255, 255, 0.4);
+            /* [修改] 卡片背景色 */
+            background: rgba(255, 255, 255, 0.6); 
             padding: 20px;
             border-radius: 20px;
             opacity: 0;
             transform: translateY(30px);
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
             width: calc(33.333% - 20px); 
             min-width: 220px;
             box-sizing: border-box;
@@ -197,7 +204,7 @@
         }
 
         .member-card:hover {
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.9);
             transform: translateY(-10px) !important;
         }
 
@@ -208,7 +215,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.5); /* 遮罩稍微加深 */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -228,14 +235,14 @@
             opacity: 1;
         }
 
-        /* 卡片小圖：自動比例 */
+        /* 卡片小圖 */
         .member-photo {
             width: auto;
             max-width: 100%;
             height: auto;
             max-height: 150px;
             border-radius: 10px;
-            object-fit: contain; /* 完整顯示 */
+            object-fit: contain; 
             
             flex-shrink: 0;
             border: 4px solid #fff;
@@ -331,7 +338,6 @@
             overflow: hidden;
         }
 
-        /* 燈箱大圖：完整顯示 */
         .lightbox-img-container img {
             width: 100%;
             height: 100%;
@@ -350,7 +356,8 @@
 
         .lightbox-details h2 {
             margin: 0 0 10px 0;
-            color: #F58484;
+            /* [修改] 燈箱標題顏色 */
+            color: #E57373; 
             font-size: 2rem;
             border-bottom: 3px solid #eee;
             padding-bottom: 10px;
@@ -402,7 +409,8 @@
         }
 
         .close-btn:hover {
-            background: #F58484;
+            /* [修改] 關閉按鈕 hover 顏色 */
+            background: #E57373; 
             color: white;
         }
 
@@ -483,14 +491,11 @@
             <div class="profile-card anim-element">
                 <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/20251205_215609(1).jpg" class="profile-img" alt="Profile Picture">
                 <div class="profile-text">
-                    <h2>湯郁敏</h2>
+                    <h2>我是誰？</h2>
                     <p>
-                        這是一個融合許多興趣在同一個人身上的神奇人類。<br>
-                        動漫部分只放了一些自己每個時期比較喜歡的(aka現在還有在收周邊的)。<br>
-                        是個正在哲學系中努力的無名小卒，<br>
-                        正在努力準備雙輔，希望可以在政大學到更多東西。(免費的資源總是要用好用滿)<br>
-                        在製作網站的時候才稍微統計一下自己看過的動漫，<br>
-                        雖然是不完全統計，但看到我還是不知道自己怎麼上大學ㄉ
+                        你好！歡迎來到我的個人網站。我是一名熱愛設計與程式開發的學生。<br>
+                        這個網站展示了我喜愛的動畫作品以及我的個人風格。<br>
+                        我喜歡探索新事物，就像這些動畫中的角色一樣，充滿冒險精神。
                     </p>
                     
                     <div class="social-links">
@@ -513,8 +518,8 @@
                 <div class="member-card anim-element" 
                      data-title="閃電十一人" 
                      data-subtitle="電視兒童時期" 
-                     data-desc="廣為人知的超能力運動番，有青春、友誼、基情(?)，三個經典的少年漫要素，跟超能力網球一樣，有著各種帥氣但現實完全不可能使用的招式。後期更發展出用足球拯救國家這種神奇的劇情，但我只能說:好看、愛看拜託多來點，但後續續集出現的腳色的崩壞我們就不提了，越說越傷心。"
-                     data-yt-id="y-vmhUs-iNw"> 
+                     data-desc="這是關於一群熱愛足球少年的故事。圓堂守帶領著雷門中學足球社，從瀕臨廢社到稱霸全國，甚至挑戰世界。這部作品教會了我「永不放棄」的精神，以及夥伴之間無可取代的羈絆。"
+                     data-yt-id="Kk02W4G8rVU"> 
                     <div class="click-hint">點擊查看更多</div>
                     <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/Inazuma_Eleven_logo.jpg" class="member-photo">
                     <div class="member-info">
@@ -526,11 +531,8 @@
                 <div class="member-card anim-element"
                      data-title="影子籃球員" 
                      data-subtitle="電視兒童時期" 
-                     data-desc="又是一部超能力運動番(到底多愛)，整部劇的重點就是黑子如何透過打敗以前的天才隊友，讓他們體會敗北的滋味，
-                                 進而成為一個正常、會跟隊友溝通的人類。
-                                奇蹟的世代這個設計當年有夠炫砲，還有zone設定直接從人類變奇行種，很多小時候會覺得很酷的元素。
-                                雖然現在來看黑子的理由其實有一點好笑，但是是我當年熱愛的無腦爽番之一。"
-                     data-yt-id="ZKEgXKp__sM"> 
+                     data-desc="奇蹟世代的傳說與影子的故事。黑子哲也與火神大我的搭檔，挑戰過往的隊友。這部作品探討了天賦與努力的關係，以及什麼是真正的勝利。"
+                     data-yt-id="Rim2cQxXqIg">
                     <div class="click-hint">點擊查看更多</div>
                     <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/14185-p_230118.png" class="member-photo">
                     <div class="member-info">
@@ -542,10 +544,8 @@
                 <div class="member-card anim-element"
                      data-title="通靈王" 
                      data-subtitle="電視兒童時期" 
-                     data-desc="跟jojo有點相似的動畫，長大去補漫畫才知道當年被腰斬的結局有多荒謬XD。
-                                這部充滿很多政治不正確、現代出絕對會批鬥的元素(eg.貞德住在鐵處女裡面、有角色15歲就結婚生小孩了、還有小孩醫生下來就丟給別人照顧夫妻自己跑去到處旅行的)
-                                ，不過這些元素是結局&續篇才出現，本篇是弟弟和雙胞胎哥哥之間的戰鬥，依舊是充滿各種花美男的一部動漫。"
-                     data-yt-id="ZGW1R6Mpz8Y"> 
+                     data-desc="為了成為通靈王，麻倉葉與夥伴們參加了通靈王大賽。雖然看似悠閒，但其實背負著沉重的命運。「船到橋頭自然直」，這句話影響了我很久。"
+                     data-yt-id="j64f4c-f1g8">
                     <div class="click-hint">點擊查看更多</div>
                     <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/Shaman_King.jpg" class="member-photo">
                     <div class="member-info">
@@ -557,9 +557,8 @@
                 <div class="member-card anim-element"
                      data-title="怪化貓" 
                      data-subtitle="3C兒童時期" 
-                     data-desc="畫風非常獨特，截至目前唯一有買cd收藏整套的動畫。故事主角是一個賣藥郎，會到各個有問題的人的家中去消除物怪。
-                    雖然不是劇情本身的內容，但這部最大的反差是主角本身是個理性客觀，幫忙祓除物怪&懲罰惡人的角色，可是聲優本人婚內出軌還劈兩人~~難怪說要把角色和聲優分開看~~。"
-                     data-yt-id="DSXiYPW98I8">
+                     data-desc="賣藥郎斬妖除魔的故事，畫風極具特色，像浮世繪一般華麗。每一個單元劇都探討了人性的黑暗與執念，是藝術與劇情的完美結合。"
+                     data-yt-id="A9e_WiHjVpA">
                     <div class="click-hint">點擊查看更多</div>
                     <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/Mononoke%2CAnimated_poster%2CFeb_2020.jpg" class="member-photo">
                     <div class="member-info">
@@ -571,9 +570,8 @@
                 <div class="member-card anim-element"
                      data-title="最遊記" 
                      data-subtitle="3C兒童時期" 
-                     data-desc="基本上除了「角色名」和去「西天取經」這兩個要素以外基本上跟原版西遊記毫無交集的動漫，最一開始是被精美的畫風吸引的(僅限漫畫版，2000年的動畫堪稱災難級別，但現
-                                在好一點了)，但劇情中關於人性的描述是讓我一只留在坑裡的原因，主角們從「為自己而活」逐漸變得更關心他人，再搭配作者本人的生命歷程，一切都讓這部動漫變得更加讓人喜愛。"
-                     data-yt-id="qr26Mjix6qY">
+                     data-desc="顛覆傳統西遊記的設定，四個帥氣又暴力的角色前往西天取經。這不是關於信仰，而是關於「活著」的意義。準備好了嗎？要開槍了！"
+                     data-yt-id="q2P5qFvM4zU">
                     <div class="click-hint">點擊查看更多</div>
                     <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/210111-saiyuki-01.jpg" class="member-photo">
                     <div class="member-info">
@@ -585,9 +583,8 @@
                 <div class="member-card anim-element"
                      data-title="隱瞞之事" 
                      data-subtitle="3C兒童時期" 
-                     data-desc="一位畫黃色漫畫的爸爸，拼命對女兒隱瞞自己職業的故事，過程中為了隱瞞女兒也做出很多好笑的舉動。不過這部是搞笑中帶淚的那種，會隨著主線逐漸揭開爸爸所隱瞞的事情，
-                                    還好最後結局是好的，不然可能會想搭時光機穿越回去阻止自己。"
-                     data-yt-id="cHYeFFGcjdc">
+                     data-desc="一位畫黃色漫畫的爸爸，拼命對女兒隱瞞自己職業的故事。充滿笑料卻又無比溫馨，結局更是感人肺腑，描寫了深刻的親情。"
+                     data-yt-id="dJ2q5-b9jTI">
                     <div class="click-hint">點擊查看更多</div>
                     <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/Kakushigoto_Key_Visual.jpeg" class="member-photo">
                     <div class="member-info">
@@ -599,11 +596,10 @@
                 <div class="member-card anim-element"
                      data-title="陰晴不定的體操哥哥" 
                      data-subtitle="略老宅宅" 
-                     data-desc="表面陽光的兒童節目體操哥哥，內心卻充滿了社會人的厭世與黑暗。這部真的厭世到超好笑，最喜歡看在兒童台工作的大哥哥大姊姊的厭世樣了，搭配yoyo台的姊姊上康熙來了的訪問一起服用效果更加。
-                                缺點是中文版漫畫出兩極就沒有下文了，動畫版可能是銷量不好也沒有再出第二季......"
-                     data-yt-id="O8Dj2zXEhW0">
+                     data-desc="表面陽光的兒童節目體操哥哥，內心卻充滿了社會人的厭世與黑暗。這是一部獻給被社會摧殘的大人們的黑色幽默喜劇。"
+                     data-yt-id="LdF_gamd1r4">
                     <div class="click-hint">點擊查看更多</div>
-                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/%E3%81%86%E3%82%89%E3%81%BF%E3%81%A1%E3%81%8A%E5%85%84%E3%81%95%E3%82%93.jpg" class="member-photo">
+                    <img src="https://upload.wikimedia.org/wikipedia/zh/thumb/6/6f/Uramichi_Oniisan_Key_Visual.png/375px-Uramichi_Oniisan_Key_Visual.png" class="member-photo">
                     <div class="member-info">
                         <h3>陰晴不定的體操哥哥</h3>
                         <h5>略老宅宅</h5>
@@ -613,8 +609,8 @@
                 <div class="member-card anim-element"
                      data-title="異度侵入" 
                      data-subtitle="略老宅宅" 
-                     data-desc="潛入殺人犯的潛意識「井」中進行推理。一開始以為又會是主角龍傲天設定，看到中後才發現這是一個胃痛番，主角真的很讓人不捨，也會對貫穿整度動畫的「井」感到懷疑，可惜的是沒有出第二季(此為原創動畫)。"
-                     data-yt-id="xjFKGqNIPEA">
+                     data-desc="潛入殺人犯的潛意識「井」中進行推理。設定新穎，邏輯縝密，劇本非常強大。神探酒井戶的每一次解謎都讓人嘆為觀止。"
+                     data-yt-id="pOi4F4wT8c">
                     <div class="click-hint">點擊查看更多</div>
                     <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/ID_INVADED_anime.jpg" class="member-photo">
                     <div class="member-info">
@@ -626,7 +622,7 @@
                 <div class="member-card anim-element"
                      data-title="出入禁止的鼴鼠" 
                      data-subtitle="略老宅宅" 
-                     data-desc="江口出品，必屬精品。這次依然在作品中融入了大量的搞笑和吉O力，但在這一部融入了更多的主線故事，主角鼴鼠的身分之謎也隨著劇情逐漸揭曉。"
+                     data-desc="講述在世間徘徊的怪人與被捲入事件的人們。充滿了都市傳說色彩與奇幻風格的冒險故事。"
                      data-yt-id="i0XigEENjpM">
                     <div class="click-hint">點擊查看更多</div>
                     <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/4d4aecc0f4c49ca490abd99f841tvy65.jpg" class="member-photo">
@@ -639,7 +635,7 @@
             </div>
 
             <div class="section-title anim-element">
-                <h1>其他坑</h1>
+                <h1>其他坑事務</h1>
             </div>
 
             <div class="members-grid">
@@ -647,9 +643,8 @@
                 <div class="member-card anim-element"
                      data-title="Super Junior" 
                      data-subtitle="追星 / 韓流帝王" 
-                     data-desc="我的本命團體！遙記事從國三開始追的XD。那個時候是看綜藝入坑的，真的笑到肚子超痛，之後再看到舞台直接被圈粉垂直入坑。綜藝首推SUPER TV，舞台2010年之後的隨便找變好看。
-                        我直至今日都還在坑裡活得很安詳。音訊放的是我很喜歡的一首歌，會讓人忍不住想唱王老先生有塊地(笑)"
-                     data-yt-id="Uqi34thogl4"> 
+                     data-desc="我的本命團體！他們不只是偶像，更是綜藝之神。從 Sorry Sorry 到現在，即使變成「老少年」，舞台魅力依然不減，特別是演唱會上的 Talk 環節比唱歌還精彩！"
+                     data-yt-id="8KyG72ndM8c"> 
                     <div class="click-hint">點擊查看更多</div>
                     <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/2025-07-0920taiwan20SUPERE7AC8DE48CBCE6A3A6E588BCE38ASuperE38BAEE5B385%25A71.webp" class="member-photo">
                     <div class="member-info">
@@ -661,8 +656,7 @@
                 <div class="member-card anim-element"
                      data-title="羽生結弦" 
                      data-subtitle="追冰演 / 花滑王子" 
-                     data-desc="國中的時候因為yuri on ice入坑，始終對他在冰上的生命力充滿欽佩，今年二月還跑去日本看他的冰演，雖然很遺憾他還有在比賽時不能去現場丟小熊維尼，但看完那場表演也算完成一項人生清單了。
-                                "
+                     data-desc="他不僅是兩屆奧運金牌得主，更是將花式滑冰昇華為藝術的藝術家。轉為職業選手後，他的冰演總是能帶給觀眾極致的視覺與聽覺饗宴，每一個節目都充滿了靈魂。"
                      data-yt-id="23EfsN7vEOA"> 
                     <div class="click-hint">點擊查看更多</div>
                     <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/d3121765.jpg" class="member-photo">
@@ -675,8 +669,8 @@
                 <div class="member-card anim-element"
                      data-title="厭世醫師阿萬" 
                      data-subtitle="追V / 醫療迷因" 
-                     data-desc="當初是看他分享邪教入坑的(影片現已轉會員)，但阿萬和動物朋友的崩潰遊戲實錄是我最近的快樂來源，不過最喜歡的還是阿萬的打工社畜厭世感，一想到醫生也這麼厭世我突然就沒那麼厭世了。"
-                     data-yt-id="us2Afl0bic4&t"> 
+                     data-desc="透過迷因與幽默的方式，分享醫療現場的崩潰日常。他的地獄梗總是能精準戳中笑點（雖然有時候笑著笑著就哭了），是下班後放鬆心情的最佳良藥。"
+                     data-yt-id="s5qJ8v-4tT0"> 
                     <div class="click-hint">點擊查看更多</div>
                     <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/channels4_profile.jpg" class="member-photo">
                     <div class="member-info">
@@ -687,12 +681,16 @@
 
             </div>
 
+            <div class="mid-image-container anim-element">
+                <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/%E6%94%BF%E5%A4%A7%E6%96%B9%E5%9F%8E%E5%B8%82.png" alt="政大方城市">
+            </div>
+
         </div>
 
     </div>
 
     <footer>
-        <p>Copyright © 2025 自我介紹. All Rights Reserved.</p>
+        <p>Copyright © 2025 政大方城市. All Rights Reserved.</p>
     </footer>
 
     <script>
