@@ -1,774 +1,756 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>個人介紹網站</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        /* --- 基礎設定 --- */
-        body {
-            background-image: linear-gradient(210deg, #2A6DF5, #2A2FF5);
-            min-height: 100vh;
-            margin: 0;
-            font-family: "Microsoft JhengHei", sans-serif;
-            overflow-x: hidden;
-            display: flex;
-            flex-direction: column;
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>個人介紹網站</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* --- 基礎設定 --- */
+        body {
+            background-image: linear-gradient(210deg, #2A6DF5, #2A2FF5);
+            min-height: 100vh;
+            margin: 0;
+            font-family: "Microsoft JhengHei", sans-serif;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+        }
 
-        /* --- 開場動畫區塊 --- */
-        #intro {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: black;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            animation: fadeOut 1.2s ease 1.5s forwards;
-            pointer-events: none;
-        }
+        /* --- 開場動畫區塊 --- */
+        #intro {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            animation: fadeOut 1.2s ease 1.5s forwards;
+            pointer-events: none;
+        }
 
-        .intro-logo {
-            width: 60%;
-            max-width: 500px;
-            height: auto;
-            opacity: 0;
-            transform: scale(0.8);
-            animation: popIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        }
+        .intro-logo {
+            width: 60%;
+            max-width: 500px;
+            height: auto;
+            opacity: 0;
+            transform: scale(0.8);
+            animation: popIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
 
-        @keyframes popIn {
-            to { opacity: 1; transform: scale(1); }
-        }
+        @keyframes popIn {
+            to { opacity: 1; transform: scale(1); }
+        }
 
-        @keyframes fadeOut {
-            to { opacity: 0; visibility: hidden; }
-        }
+        @keyframes fadeOut {
+            to { opacity: 0; visibility: hidden; }
+        }
+        
+        /* 定義進場動畫 (從原本底部移上來) */
+        @keyframes popup-up {
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
 
-        /* --- 主要內容容器 --- */
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 60px 20px 40px 20px;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            flex: 1;
-        }
+        /* --- 主要內容容器 --- */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 20px 40px 20px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
 
-        /* --- 右欄：內容包裹器 --- */
-        .content-right-col {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-        }
+        /* --- 右欄：內容包裹器 --- */
+        .content-right-col {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
 
-        /* --- 通用標題樣式 --- */
-        .section-title {
-            background-color: #F58484;
-            padding: 10px 40px;
-            border-radius: 50px;
-            margin: 50px auto 30px auto;
-            text-align: center;
-            width: fit-content;
-            opacity: 0;
-            transform: scale(0.8);
-            box-shadow: 2px 2px 0px rgba(0,0,0,0.1);
-        }
-        
-        .section-title h1 {
-            margin: 0;
-            font-size: 24px;
-            color: #fff;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
-        }
+        /* --- 通用標題樣式 --- */
+        .section-title {
+            background-color: #F58484;
+            padding: 10px 40px;
+            border-radius: 50px;
+            margin: 50px auto 30px auto;
+            text-align: center;
+            width: fit-content;
+            opacity: 0;
+            transform: scale(0.8);
+            box-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+        }
+        
+        .section-title h1 {
+            margin: 0;
+            font-size: 24px;
+            color: #fff;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
 
-        /* --- 自我介紹卡片樣式 --- */
-        .profile-card {
-            background: rgba(255, 255, 255, 0.5);
-            padding: 40px;
-            border-radius: 20px;
-            display: flex;
-            align-items: flex-start; /* 上方對齊 */
-            gap: 40px;
-            width: 100%;
-            box-sizing: border-box;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            opacity: 0;
-            transform: translateY(20px);
-        }
+        /* --- 自我介紹卡片樣式 --- */
+        .profile-card {
+            background: rgba(255, 255, 255, 0.5);
+            padding: 40px;
+            border-radius: 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 40px;
+            width: 100%;
+            box-sizing: border-box;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            opacity: 0;
+            transform: translateY(20px);
+        }
 
-        /* 自我介紹圖片：自動比例 */
-        .profile-img {
-            width: 100%;
-            max-width: 250px;
-            height: auto;
-            border-radius: 15px;
-            border: 6px solid #fff;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-            flex-shrink: 0;
-            object-fit: contain; /* 確保圖片完整 */
-        }
+        .profile-img {
+            width: 100%;
+            max-width: 250px;
+            height: auto;
+            border-radius: 15px;
+            border: 6px solid #fff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            flex-shrink: 0;
+            object-fit: contain;
+        }
 
-        .profile-text {
-            text-align: left;
-            flex: 1;
-        }
+        .profile-text {
+            text-align: left;
+            flex: 1;
+        }
 
-        .profile-text h2 {
-            margin: 0 0 15px 0;
-            color: #2c3e50;
-            font-size: 2rem;
-            border-bottom: 2px solid #F58484;
-            display: inline-block;
-            padding-bottom: 5px;
-        }
+        .profile-text h2 {
+            margin: 0 0 15px 0;
+            color: #2c3e50;
+            font-size: 2rem;
+            border-bottom: 2px solid #F58484;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
 
-        .profile-text p {
-            margin: 0;
-            color: #555;
-            font-size: 1.15rem;
-            line-height: 1.8;
-        }
+        .profile-text p {
+            margin: 0;
+            color: #555;
+            font-size: 1.15rem;
+            line-height: 1.8;
+        }
 
-        /* 社群按鈕樣式 */
-        .social-links {
-            margin-top: 20px;
-            display: flex;
-            gap: 15px;
-        }
+        /* 社群按鈕樣式 */
+        .social-links {
+            margin-top: 20px;
+            display: flex;
+            gap: 15px;
+        }
 
-        .social-btn {
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background-color: #2c3e50;
-            color: white;
-            text-decoration: none;
-            font-size: 1.4rem;
-            transition: 0.3s;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
+        .social-btn {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-color: #2c3e50;
+            color: white;
+            text-decoration: none;
+            font-size: 1.4rem;
+            transition: 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
 
-        .social-btn:hover {
-            background-color: #F58484;
-            transform: translateY(-5px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
-        }
+        .social-btn:hover {
+            background-color: #F58484;
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
 
-        /* --- 列表排版 (Flexbox) --- */
-        .members-grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 25px;
-            width: 100%;
-        }
+        /* --- 列表排版 (Flexbox) --- */
+        .members-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            width: 100%;
+        }
 
-        /* 卡片樣式 */
-        .member-card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            background: rgba(255, 255, 255, 0.4);
-            padding: 20px;
-            border-radius: 20px;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            width: calc(33.333% - 20px); 
-            min-width: 220px;
-            box-sizing: border-box;
-            position: relative;
-            cursor: pointer;
-            overflow: hidden;
-        }
+        /* 卡片樣式 */
+        .member-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.4);
+            padding: 20px;
+            border-radius: 20px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: transform 0.3s ease, background 0.3s ease; /* 修正動畫屬性衝突 */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            /* 修正寬度計算，避免在 gap 存在時換行異常 */
+            width: calc(33.333% - 25px); 
+            min-width: 220px;
+            box-sizing: border-box;
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+        }
 
-        .member-card:hover {
-            background: rgba(255, 255, 255, 0.8);
-            transform: translateY(-10px) !important;
-        }
+        .member-card:hover {
+            background: rgba(255, 255, 255, 0.8);
+            transform: translateY(-10px) !important; /* 加上 !important 覆蓋 JS 動畫結束後的狀態 */
+        }
 
-        /* 點擊提示遮罩 */
-        .click-hint {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.4);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            border-radius: 20px;
-            color: white;
-            font-weight: bold;
-            font-size: 1.2rem;
-            letter-spacing: 2px;
-            backdrop-filter: blur(2px);
-            pointer-events: none;
-            z-index: 2;
-        }
+        /* 點擊提示遮罩 */
+        .click-hint {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 20px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            backdrop-filter: blur(2px);
+            pointer-events: none;
+            z-index: 2;
+        }
 
-        .member-card:hover .click-hint {
-            opacity: 1;
-        }
+        .member-card:hover .click-hint {
+            opacity: 1;
+        }
 
-        /* 卡片小圖：自動比例 */
-        .member-photo {
-            width: auto;
-            max-width: 100%;
-            height: auto;
-            max-height: 150px;
-            border-radius: 10px;
-            object-fit: contain; /* 完整顯示 */
-            
-            flex-shrink: 0;
-            border: 4px solid #fff;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-            margin-bottom: 15px;
-            background-color: #fff;
-        }
+        .member-photo {
+            width: auto;
+            max-width: 100%;
+            height: auto;
+            max-height: 150px;
+            border-radius: 10px;
+            object-fit: contain;
+            flex-shrink: 0;
+            border: 4px solid #fff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            margin-bottom: 15px;
+            background-color: #fff;
+        }
 
-        .member-info h3 {
-            margin: 5px 0;
-            font-size: 1.2rem;
-            color: #2c3e50;
-            font-weight: bold;
-        }
+        .member-info h3 {
+            margin: 5px 0;
+            font-size: 1.2rem;
+            color: #2c3e50;
+            font-weight: bold;
+        }
 
-        .member-info h5 {
-            margin: 5px 0 0 0;
-            font-size: 0.95rem;
-            color: #666;
-            line-height: 1.5;
-            font-weight: normal;
-        }
+        .member-info h5 {
+            margin: 5px 0 0 0;
+            font-size: 0.95rem;
+            color: #666;
+            line-height: 1.5;
+            font-weight: normal;
+        }
 
-        /* --- 底部圖片樣式 --- */
-        .mid-image-container {
-            width: 100%;
-            margin: 50px 0 20px 0;
-            display: flex;
-            justify-content: center;
-            opacity: 0;
-            transform: scale(0.9);
-        }
+        /* --- 頁尾樣式 --- */
+        footer {
+            width: 100%;
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 50px;
+            font-size: 0.9rem;
+        }
 
-        .mid-image-container img {
-            width: 100%;
-            max-width: 450px;
-            height: auto;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
+        /* --- 燈箱 (Lightbox) 樣式 --- */
+        #lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
 
-        /* --- 頁尾樣式 --- */
-        footer {
-            width: 100%;
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 30px 0;
-            margin-top: 50px;
-            font-size: 0.9rem;
-        }
+        #lightbox.active {
+            display: flex;
+            opacity: 1;
+        }
 
-        /* --- 燈箱 (Lightbox) 樣式 --- */
-        #lightbox {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.85);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 10000;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
+        .lightbox-content {
+            background: white;
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh; 
+            border-radius: 20px;
+            display: flex;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            animation: popIn 0.3s ease;
+        }
 
-        #lightbox.active {
-            display: flex;
-            opacity: 1;
-        }
+        .lightbox-img-container {
+            flex: 1;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding: 20px; /* 增加一點內距避免圖片貼邊 */
+            box-sizing: border-box;
+        }
 
-        .lightbox-content {
-            background: white;
-            width: 90%;
-            max-width: 900px;
-            max-height: 90vh; 
-            border-radius: 20px;
-            display: flex;
-            overflow: hidden;
-            position: relative;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            animation: popIn 0.3s ease;
-        }
+        .lightbox-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; 
+            max-height: 80vh; 
+        }
 
-        .lightbox-img-container {
-            flex: 1;
-            background: #f0f0f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
+        .lightbox-details {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow-y: auto;
+        }
 
-        /* 燈箱大圖：完整顯示 */
-        .lightbox-img-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain; 
-            max-height: 90vh; 
-        }
+        .lightbox-details h2 {
+            margin: 0 0 10px 0;
+            color: #F58484;
+            font-size: 2rem;
+            border-bottom: 3px solid #eee;
+            padding-bottom: 10px;
+        }
 
-        .lightbox-details {
-            flex: 1;
-            padding: 40px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            overflow-y: auto;
-        }
+        .lightbox-details h4 {
+            margin: 0 0 20px 0;
+            color: #888;
+            font-weight: normal;
+        }
 
-        .lightbox-details h2 {
-            margin: 0 0 10px 0;
-            color: #F58484;
-            font-size: 2rem;
-            border-bottom: 3px solid #eee;
-            padding-bottom: 10px;
-        }
+        .lightbox-details p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 30px;
+            text-align: justify;
+        }
 
-        .lightbox-details h4 {
-            margin: 0 0 20px 0;
-            color: #888;
-            font-weight: normal;
-        }
+        .yt-wrapper {
+            width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: auto;
+        }
+        
+        .yt-label {
+            font-size: 0.9rem;
+            color: #999;
+            margin-bottom: 5px;
+        }
 
-        .lightbox-details p {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: #555;
-            margin-bottom: 30px;
-            text-align: justify;
-        }
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(0,0,0,0.1);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 24px;
+            color: #555;
+            transition: 0.2s;
+            z-index: 10;
+        }
 
-        .yt-wrapper {
-            width: 100%;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-top: auto;
-        }
-        
-        .yt-label {
-            font-size: 0.9rem;
-            color: #999;
-            margin-bottom: 5px;
-        }
+        .close-btn:hover {
+            background: #F58484;
+            color: white;
+        }
 
-        .close-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 40px;
-            height: 40px;
-            background: rgba(0,0,0,0.1);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            font-size: 24px;
-            color: #555;
-            transition: 0.2s;
-            z-index: 10;
-        }
+        /* --- RWD：手機版調整 --- */
+        @media (max-width: 768px) {
+            .container { padding: 30px 20px; }
+            
+            .profile-card { flex-direction: column; text-align: center; align-items: center; }
+            .profile-text { text-align: center; }
 
-        .close-btn:hover {
-            background: #F58484;
-            color: white;
-        }
+            .social-links { justify-content: center; }
 
-        /* --- RWD：手機版調整 --- */
-        @media (max-width: 768px) {
-            .container { padding: 30px 20px; }
-            
-            .profile-card { flex-direction: column; text-align: center; align-items: center; }
-            .profile-text { text-align: center; }
+            .member-card {
+                width: 100%; /* 手機版佔滿 */
+                flex-direction: row;
+                text-align: left;
+            }
+            
+            .member-photo {
+                max-height: 100px; /* 手機版縮小圖片 */
+                margin-right: 20px;
+                margin-bottom: 0;
+            }
 
-            .social-links { justify-content: center; }
+            .lightbox-content {
+                flex-direction: column;
+                max-height: 95vh;
+                overflow-y: auto;
+            }
 
-            .member-card {
-                width: 100%;
-                flex-direction: row;
-                text-align: left;
-            }
-            
-            .member-photo {
-                max-height: 180px;
-                margin-bottom: 15px;
-            }
-
-            .lightbox-content {
-                flex-direction: column;
-                max-height: 95vh;
-                overflow-y: auto;
-            }
-
-            .lightbox-img-container {
-                height: 250px;
-                flex: none;
-            }
-            
-            .lightbox-details {
-                padding: 25px;
-            }
-            
-            .click-hint {
-                display: none;
-            }
-        }
-    </style>
+            .lightbox-img-container {
+                height: 250px;
+                flex: none;
+                padding: 0;
+            }
+            
+            .lightbox-details {
+                padding: 25px;
+            }
+            
+            .click-hint {
+                display: none;
+            }
+        }
+    </style>
 </head>
 <body>
 
-    <div id="intro">
-        <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/%E6%88%91%E6%98%AF%E8%AA%B0.png" class="intro-logo" alt="Opening Logo">
-    </div>
+    <div id="intro">
+        <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/%E6%88%91%E6%98%AF%E8%AA%B0.png" class="intro-logo" alt="Opening Logo">
+    </div>
 
-    <div id="lightbox">
-        <div class="lightbox-content">
-            <div class="close-btn">×</div>
-            <div class="lightbox-img-container">
-                <img id="lightbox-img" src="" alt="詳細圖片">
-            </div>
-            <div class="lightbox-details">
-                <h2 id="lightbox-title">標題</h2>
-                <h4 id="lightbox-subtitle">副標題</h4>
-                <p id="lightbox-desc">這裡會顯示完整的介紹內容...</p>
-                
-                <div class="yt-label">♫ 相關影音 (自動播放中)</div>
-                <div class="yt-wrapper">
-                    <div id="yt-placeholder"></div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div id="lightbox">
+        <div class="lightbox-content">
+            <div class="close-btn">×</div>
+            <div class="lightbox-img-container">
+                <img id="lightbox-img" src="" alt="詳細圖片">
+            </div>
+            <div class="lightbox-details">
+                <h2 id="lightbox-title">標題</h2>
+                <h4 id="lightbox-subtitle">副標題</h4>
+                <p id="lightbox-desc">這裡會顯示完整的介紹內容...</p>
+                
+                <div class="yt-label">♫ 相關影音 (自動播放中)</div>
+                <div class="yt-wrapper">
+                    <div id="yt-placeholder"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <div class="container">
-        
-        <div class="content-right-col">
-            
-            <div class="section-title anim-element">
-                <h1>自我介紹</h1>
-            </div>
+    <div class="container">
+        
+        <div class="content-right-col">
+            
+            <div class="section-title anim-element">
+                <h1>自我介紹</h1>
+            </div>
 
-            <div class="profile-card anim-element">
-                <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/20251205_215609(1).jpg" class="profile-img" alt="Profile Picture">
-                <div class="profile-text">
-                    <h2>湯郁敏</h2>
-                    <p>
-                        這是一個融合許多興趣在同一個人身上的神奇人類。<br>
-                        動漫部分只放了一些自己每個時期比較喜歡的(aka現在還有在收周邊的)。<br>
-                        是個正在哲學系中努力的無名小卒，<br>
-                        正在努力準備雙輔，希望可以在政大學到更多東西。(免費的資源總是要用好用滿)<br>
-                        在製作網站的時候才稍微統計一下自己看過的動漫，<br>
-                        雖然是不完全統計，但看到我還是不知道自己怎麼上大學ㄉ
-                    </p>
-                    
-                    <div class="social-links">
-                        <a href="https://www.instagram.com/q___.12345.___p/" target="_blank" class="social-btn" title="Instagram">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="https://github.com/113104001-lang" target="_blank" class="social-btn" title="GitHub">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        <a href="mailto:113104001@g.nccu.edu.tw" class="social-btn" title="Email">
-                            <i class="fas fa-envelope"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
+            <div class="profile-card anim-element">
+                <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/20251205_215609(1).jpg" class="profile-img" alt="Profile Picture">
+                <div class="profile-text">
+                    <h2>湯郁敏</h2>
+                    <p>
+                        這是一個融合許多興趣在同一個人身上的神奇人類。<br>
+                        動漫部分只放了一些自己每個時期比較喜歡的(aka現在還有在收周邊的)。<br>
+                        是個正在哲學系中努力的無名小卒，<br>
+                        正在努力準備雙輔，希望可以在政大學到更多東西。(免費的資源總是要用好用滿)<br>
+                        在製作網站的時候才稍微統計一下自己看過的動漫，<br>
+                        雖然是不完全統計，但看到我還是不知道自己怎麼上大學ㄉ
+                    </p>
+                    
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/q___.12345.___p/" target="_blank" class="social-btn" title="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://github.com/113104001-lang" target="_blank" class="social-btn" title="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="mailto:113104001@g.nccu.edu.tw" class="social-btn" title="Email">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
 
-            <div class="section-title anim-element">
-                <h1>動畫介紹</h1>
-            </div>
+            <div class="section-title anim-element">
+                <h1>動畫介紹</h1>
+            </div>
 
-            <div class="members-grid">
-                
-                <div class="member-card anim-element" 
-                     data-title="閃電十一人" 
-                     data-subtitle="電視兒童時期" 
-                     data-desc="廣為人知的超能力運動番，有青春、友誼、基情(?)，三個經典的少年漫要素，跟超能力網球一樣，有著各種帥氣但現實完全不可能使用的招式。後期更發展出用足球拯救國家這種神奇的劇情，但我只能說:好看、愛看拜託多來點，但後續續集出現的腳色的崩壞我們就不提了，越說越傷心。"
-                     data-yt-id="y-vmhUs-iNw"> 
-                    <div class="click-hint">點擊查看更多</div>
-                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/Inazuma_Eleven_logo.jpg" class="member-photo">
-                    <div class="member-info">
-                        <h3>閃電十一人</h3>
-                        <h5>電視兒童時期</h5>
-                    </div>
-                </div>
+            <div class="members-grid">
+                
+                <div class="member-card anim-element" 
+                     data-title="閃電十一人" 
+                     data-subtitle="電視兒童時期" 
+                     data-desc="廣為人知的超能力運動番，有青春、友誼、基情(?)，三個經典的少年漫要素，跟超能力網球一樣，有著各種帥氣但現實完全不可能使用的招式。後期更發展出用足球拯救國家這種神奇的劇情，但我只能說:好看、愛看拜託多來點，但後續續集出現的腳色的崩壞我們就不提了，越說越傷心。"
+                     data-yt-id="y-vmhUs-iNw"> 
+                    <div class="click-hint">點擊查看更多</div>
+                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/Inazuma_Eleven_logo.jpg" class="member-photo">
+                    <div class="member-info">
+                        <h3>閃電十一人</h3>
+                        <h5>電視兒童時期</h5>
+                    </div>
+                </div>
 
-                <div class="member-card anim-element"
-                     data-title="影子籃球員" 
-                     data-subtitle="電視兒童時期" 
-                     data-desc="又是一部超能力運動番(到底多愛)，整部劇的重點就是黑子如何透過打敗以前的天才隊友，讓他們體會敗北的滋味，
-                                 進而成為一個正常、會跟隊友溝通的人類。
-                                奇蹟的世代這個設計當年有夠炫砲，還有zone設定直接從人類變奇行種，很多小時候會覺得很酷的元素。
-                                雖然現在來看黑子的理由其實有一點好笑，但是是我當年熱愛的無腦爽番之一。"
-                     data-yt-id="ZKEgXKp__sM"> 
-                    <div class="click-hint">點擊查看更多</div>
-                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/14185-p_230118.png" class="member-photo">
-                    <div class="member-info">
-                        <h3>影子籃球員</h3>
-                        <h5>電視兒童時期</h5>
-                    </div>
-                </div>
+                <div class="member-card anim-element"
+                     data-title="影子籃球員" 
+                     data-subtitle="電視兒童時期" 
+                     data-desc="又是一部超能力運動番(到底多愛)，整部劇的重點就是黑子如何透過打敗以前的天才隊友，讓他們體會敗北的滋味，
+                                 進而成為一個正常、會跟隊友溝通的人類。
+                                奇蹟的世代這個設計當年有夠炫砲，還有zone設定直接從人類變奇行種，很多小時候會覺得很酷的元素。
+                                雖然現在來看黑子的理由其實有一點好笑，但是是我當年熱愛的無腦爽番之一。"
+                     data-yt-id="ZKEgXKp__sM"> 
+                    <div class="click-hint">點擊查看更多</div>
+                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/14185-p_230118.png" class="member-photo">
+                    <div class="member-info">
+                        <h3>影子籃球員</h3>
+                        <h5>電視兒童時期</h5>
+                    </div>
+                </div>
 
-                <div class="member-card anim-element"
-                     data-title="通靈王" 
-                     data-subtitle="電視兒童時期" 
-                     data-desc="跟jojo有點相似的動畫，長大去補漫畫才知道當年被腰斬的結局有多荒謬XD。
-                                這部充滿很多政治不正確、現代出絕對會批鬥的元素(eg.貞德住在鐵處女裡面、有角色15歲就結婚生小孩了、還有小孩醫生下來就丟給別人照顧夫妻自己跑去到處旅行的)
-                                ，不過這些元素是結局&續篇才出現，本篇是弟弟和雙胞胎哥哥之間的戰鬥，依舊是充滿各種花美男的一部動漫。"
-                     data-yt-id="ZGW1R6Mpz8Y"> 
-                    <div class="click-hint">點擊查看更多</div>
-                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/Shaman_King.jpg" class="member-photo">
-                    <div class="member-info">
-                        <h3>通靈王</h3>
-                        <h5>電視兒童時期</h5>
-                    </div>
-                </div>
+                <div class="member-card anim-element"
+                     data-title="通靈王" 
+                     data-subtitle="電視兒童時期" 
+                     data-desc="跟jojo有點相似的動畫，長大去補漫畫才知道當年被腰斬的結局有多荒謬XD。
+                                這部充滿很多政治不正確、現代出絕對會批鬥的元素(eg.貞德住在鐵處女裡面、有角色15歲就結婚生小孩了、還有小孩醫生下來就丟給別人照顧夫妻自己跑去到處旅行的)
+                                ，不過這些元素是結局&續篇才出現，本篇是弟弟和雙胞胎哥哥之間的戰鬥，依舊是充滿各種花美男的一部動漫。"
+                     data-yt-id="ZGW1R6Mpz8Y"> 
+                    <div class="click-hint">點擊查看更多</div>
+                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/Shaman_King.jpg" class="member-photo">
+                    <div class="member-info">
+                        <h3>通靈王</h3>
+                        <h5>電視兒童時期</h5>
+                    </div>
+                </div>
 
-                <div class="member-card anim-element"
-                     data-title="怪化貓" 
-                     data-subtitle="3C兒童時期" 
-                     data-desc="畫風非常獨特，截至目前唯一有買cd收藏整套的動畫。故事主角是一個賣藥郎，會到各個有問題的人的家中去消除物怪。
-                    雖然不是劇情本身的內容，但這部最大的反差是主角本身是個理性客觀，幫忙祓除物怪&懲罰惡人的角色，可是聲優本人婚內出軌還劈兩人~~難怪說要把角色和聲優分開看~~。"
-                     data-yt-id="DSXiYPW98I8">
-                    <div class="click-hint">點擊查看更多</div>
-                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/Mononoke%2CAnimated_poster%2CFeb_2020.jpg" class="member-photo">
-                    <div class="member-info">
-                        <h3>怪化貓</h3>
-                        <h5>3C兒童時期</h5>
-                    </div>
-                </div>
+                <div class="member-card anim-element"
+                     data-title="怪化貓" 
+                     data-subtitle="3C兒童時期" 
+                     data-desc="畫風非常獨特，截至目前唯一有買cd收藏整套的動畫。故事主角是一個賣藥郎，會到各個有問題的人的家中去消除物怪。
+                    雖然不是劇情本身的內容，但這部最大的反差是主角本身是個理性客觀，幫忙祓除物怪&懲罰惡人的角色，可是聲優本人婚內出軌還劈兩人~~難怪說要把角色和聲優分開看~~。"
+                     data-yt-id="DSXiYPW98I8">
+                    <div class="click-hint">點擊查看更多</div>
+                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/Mononoke%2CAnimated_poster%2CFeb_2020.jpg" class="member-photo">
+                    <div class="member-info">
+                        <h3>怪化貓</h3>
+                        <h5>3C兒童時期</h5>
+                    </div>
+                </div>
 
-                <div class="member-card anim-element"
-                     data-title="最遊記" 
-                     data-subtitle="3C兒童時期" 
-                     data-desc="基本上除了「角色名」和去「西天取經」這兩個要素以外基本上跟原版西遊記毫無交集的動漫，最一開始是被精美的畫風吸引的(僅限漫畫版，2000年的動畫堪稱災難級別，但現
-                                在好一點了)，但劇情中關於人性的描述是讓我一只留在坑裡的原因，主角們從「為自己而活」逐漸變得更關心他人，再搭配作者本人的生命歷程，一切都讓這部動漫變得更加讓人喜愛。"
-                     data-yt-id="qr26Mjix6qY">
-                    <div class="click-hint">點擊查看更多</div>
-                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/210111-saiyuki-01.jpg" class="member-photo">
-                    <div class="member-info">
-                        <h3>最遊記</h3>
-                        <h5>3C兒童時期</h5>
-                    </div>
-                </div>
+                <div class="member-card anim-element"
+                     data-title="最遊記" 
+                     data-subtitle="3C兒童時期" 
+                     data-desc="基本上除了「角色名」和去「西天取經」這兩個要素以外基本上跟原版西遊記毫無交集的動漫，最一開始是被精美的畫風吸引的(僅限漫畫版，2000年的動畫堪稱災難級別，但現
+                                在好一點了)，但劇情中關於人性的描述是讓我一只留在坑裡的原因，主角們從「為自己而活」逐漸變得更關心他人，再搭配作者本人的生命歷程，一切都讓這部動漫變得更加讓人喜愛。"
+                     data-yt-id="qr26Mjix6qY">
+                    <div class="click-hint">點擊查看更多</div>
+                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/210111-saiyuki-01.jpg" class="member-photo">
+                    <div class="member-info">
+                        <h3>最遊記</h3>
+                        <h5>3C兒童時期</h5>
+                    </div>
+                </div>
 
-                <div class="member-card anim-element"
-                     data-title="隱瞞之事" 
-                     data-subtitle="3C兒童時期" 
-                     data-desc="一位畫黃色漫畫的爸爸，拼命對女兒隱瞞自己職業的故事，過程中為了隱瞞女兒也做出很多好笑的舉動。不過這部是搞笑中帶淚的那種，會隨著主線逐漸揭開爸爸所隱瞞的事情，
-                                    還好最後結局是好的，不然可能會想搭時光機穿越回去阻止自己。"
-                     data-yt-id="cHYeFFGcjdc">
-                    <div class="click-hint">點擊查看更多</div>
-                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/Kakushigoto_Key_Visual.jpeg" class="member-photo">
-                    <div class="member-info">
-                        <h3>隱瞞之事</h3>
-                        <h5>3C兒童時期</h5>
-                    </div>
-                </div>
+                <div class="member-card anim-element"
+                     data-title="隱瞞之事" 
+                     data-subtitle="3C兒童時期" 
+                     data-desc="一位畫黃色漫畫的爸爸，拼命對女兒隱瞞自己職業的故事，過程中為了隱瞞女兒也做出很多好笑的舉動。不過這部是搞笑中帶淚的那種，會隨著主線逐漸揭開爸爸所隱瞞的事情，
+                                    還好最後結局是好的，不然可能會想搭時光機穿越回去阻止自己。"
+                     data-yt-id="cHYeFFGcjdc">
+                    <div class="click-hint">點擊查看更多</div>
+                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/Kakushigoto_Key_Visual.jpeg" class="member-photo">
+                    <div class="member-info">
+                        <h3>隱瞞之事</h3>
+                        <h5>3C兒童時期</h5>
+                    </div>
+                </div>
 
-                <div class="member-card anim-element"
-                     data-title="陰晴不定的體操哥哥" 
-                     data-subtitle="略老宅宅" 
-                     data-desc="表面陽光的兒童節目體操哥哥，內心卻充滿了社會人的厭世與黑暗。這部真的厭世到超好笑，最喜歡看在兒童台工作的大哥哥大姊姊的厭世樣了，搭配yoyo台的姊姊上康熙來了的訪問一起服用效果更加。
-                                缺點是中文版漫畫出兩極就沒有下文了，動畫版可能是銷量不好也沒有再出第二季......"
-                     data-yt-id="O8Dj2zXEhW0">
-                    <div class="click-hint">點擊查看更多</div>
-                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/%E3%81%86%E3%82%89%E3%81%BF%E3%81%A1%E3%81%8A%E5%85%84%E3%81%95%E3%82%93.jpg" class="member-photo">
-                    <div class="member-info">
-                        <h3>陰晴不定的體操哥哥</h3>
-                        <h5>略老宅宅</h5>
-                    </div>
-                </div>
+                <div class="member-card anim-element"
+                     data-title="陰晴不定的體操哥哥" 
+                     data-subtitle="略老宅宅" 
+                     data-desc="表面陽光的兒童節目體操哥哥，內心卻充滿了社會人的厭世與黑暗。這部真的厭世到超好笑，最喜歡看在兒童台工作的大哥哥大姊姊的厭世樣了，搭配yoyo台的姊姊上康熙來了的訪問一起服用效果更加。
+                                缺點是中文版漫畫出兩極就沒有下文了，動畫版可能是銷量不好也沒有再出第二季......"
+                     data-yt-id="O8Dj2zXEhW0">
+                    <div class="click-hint">點擊查看更多</div>
+                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/%E3%81%86%E3%82%89%E3%81%BF%E3%81%A1%E3%81%8A%E5%85%84%E3%81%95%E3%82%93.jpg" class="member-photo">
+                    <div class="member-info">
+                        <h3>陰晴不定的體操哥哥</h3>
+                        <h5>略老宅宅</h5>
+                    </div>
+                </div>
 
-                <div class="member-card anim-element"
-                     data-title="異度侵入" 
-                     data-subtitle="略老宅宅" 
-                     data-desc="潛入殺人犯的潛意識「井」中進行推理。一開始以為又會是主角龍傲天設定，看到中後才發現這是一個胃痛番，主角真的很讓人不捨，也會對貫穿整度動畫的「井」感到懷疑，可惜的是沒有出第二季(此為原創動畫)。"
-                     data-yt-id="xjFKGqNIPEA">
-                    <div class="click-hint">點擊查看更多</div>
-                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/ID_INVADED_anime.jpg" class="member-photo">
-                    <div class="member-info">
-                        <h3>異度侵入</h3>
-                        <h5>略老宅宅</h5>
-                    </div>
-                </div>
+                <div class="member-card anim-element"
+                     data-title="異度侵入" 
+                     data-subtitle="略老宅宅" 
+                     data-desc="潛入殺人犯的潛意識「井」中進行推理。一開始以為又會是主角龍傲天設定，看到中後才發現這是一個胃痛番，主角真的很讓人不捨，也會對貫穿整度動畫的「井」感到懷疑，可惜的是沒有出第二季(此為原創動畫)。"
+                     data-yt-id="xjFKGqNIPEA">
+                    <div class="click-hint">點擊查看更多</div>
+                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/ID_INVADED_anime.jpg" class="member-photo">
+                    <div class="member-info">
+                        <h3>異度侵入</h3>
+                        <h5>略老宅宅</h5>
+                    </div>
+                </div>
 
-                <div class="member-card anim-element"
-                     data-title="出入禁止的鼴鼠" 
-                     data-subtitle="略老宅宅" 
-                     data-desc="江口出品，必屬精品。這次依然在作品中融入了大量的搞笑和吉O力，但在這一部融入了更多的主線故事，主角鼴鼠的身分之謎也隨著劇情逐漸揭曉。"
-                     data-yt-id="i0XigEENjpM">
-                    <div class="click-hint">點擊查看更多</div>
-                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/4d4aecc0f4c49ca490abd99f841tvy65.jpg" class="member-photo">
-                    <div class="member-info">
-                        <h3>出入禁止的鼴鼠</h3>
-                        <h5>略老宅宅</h5>
-                    </div>
-                </div>
+                <div class="member-card anim-element"
+                     data-title="出入禁止的鼴鼠" 
+                     data-subtitle="略老宅宅" 
+                     data-desc="江口出品，必屬精品。這次依然在作品中融入了大量的搞笑和吉O力，但在這一部融入了更多的主線故事，主角鼴鼠的身分之謎也隨著劇情逐漸揭曉。"
+                     data-yt-id="i0XigEENjpM">
+                    <div class="click-hint">點擊查看更多</div>
+                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/4d4aecc0f4c49ca490abd99f841tvy65.jpg" class="member-photo">
+                    <div class="member-info">
+                        <h3>出入禁止的鼴鼠</h3>
+                        <h5>略老宅宅</h5>
+                    </div>
+                </div>
 
-            </div>
+            </div>
 
-            <div class="section-title anim-element">
-                <h1>其他坑</h1>
-            </div>
+            <div class="section-title anim-element">
+                <h1>其他坑</h1>
+            </div>
 
-            <div class="members-grid">
-                
-                <div class="member-card anim-element"
-                     data-title="Super Junior" 
-                     data-subtitle="追星 / 韓流帝王" 
-                     data-desc="我的本命團體！遙記事從國三開始追的XD。那個時候是看綜藝入坑的，真的笑到肚子超痛，之後再看到舞台直接被圈粉垂直入坑。綜藝首推SUPER TV，舞台2010年之後的隨便找變好看。
-                        我直至今日都還在坑裡活得很安詳。音訊放的是我很喜歡的一首歌，會讓人忍不住想唱王老先生有塊地(笑)"
-                     data-yt-id="Uqi34thogl4"> 
-                    <div class="click-hint">點擊查看更多</div>
-                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/2025-07-0920taiwan20SUPERE7AC8DE48CBCE6A3A6E588BCE38ASuperE38BAEE5B385%25A71.webp" class="member-photo">
-                    <div class="member-info">
-                        <h3>Super Junior</h3>
-                        <h5>追星</h5>
-                    </div>
-                </div>
+            <div class="members-grid">
+                
+                <div class="member-card anim-element"
+                     data-title="Super Junior" 
+                     data-subtitle="追星 / 韓流帝王" 
+                     data-desc="我的本命團體！遙記事從國三開始追的XD。那個時候是看綜藝入坑的，真的笑到肚子超痛，之後再看到舞台直接被圈粉垂直入坑。綜藝首推SUPER TV，舞台2010年之後的隨便找變好看。
+                        我直至今日都還在坑裡活得很安詳。音訊放的是我很喜歡的一首歌，會讓人忍不住想唱王老先生有塊地(笑)"
+                     data-yt-id="Uqi34thogl4"> 
+                    <div class="click-hint">點擊查看更多</div>
+                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/2025-07-0920taiwan20SUPERE7AC8DE48CBCE6A3A6E588BCE38ASuperE38BAEE5B385%25A71.webp" class="member-photo">
+                    <div class="member-info">
+                        <h3>Super Junior</h3>
+                        <h5>追星</h5>
+                    </div>
+                </div>
 
-                <div class="member-card anim-element"
-                     data-title="羽生結弦" 
-                     data-subtitle="追冰演 / 花滑王子" 
-                     data-desc="國中的時候因為yuri on ice入坑，始終對他在冰上的生命力充滿欽佩，今年二月還跑去日本看他的冰演，雖然很遺憾他還有在比賽時不能去現場丟小熊維尼，但看完那場表演也算完成一項人生清單了。
-                                "
-                     data-yt-id="23EfsN7vEOA"> 
-                    <div class="click-hint">點擊查看更多</div>
-                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/d3121765.jpg" class="member-photo">
-                    <div class="member-info">
-                        <h3>羽生結弦</h3>
-                        <h5>追冰演</h5>
-                    </div>
-                </div>
+                <div class="member-card anim-element"
+                     data-title="羽生結弦" 
+                     data-subtitle="追冰演 / 花滑王子" 
+                     data-desc="國中的時候因為yuri on ice入坑，始終對他在冰上的生命力充滿欽佩，今年二月還跑去日本看他的冰演，雖然很遺憾他還有在比賽時不能去現場丟小熊維尼，但看完那場表演也算完成一項人生清單了。
+                                "
+                     data-yt-id="23EfsN7vEOA"> 
+                    <div class="click-hint">點擊查看更多</div>
+                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/d3121765.jpg" class="member-photo">
+                    <div class="member-info">
+                        <h3>羽生結弦</h3>
+                        <h5>追冰演</h5>
+                    </div>
+                </div>
 
-                <div class="member-card anim-element"
-                     data-title="厭世醫師阿萬" 
-                     data-subtitle="追V / 醫療迷因" 
-                     data-desc="當初是看他分享邪教入坑的(影片現已轉會員)，但阿萬和動物朋友的崩潰遊戲實錄是我最近的快樂來源，不過最喜歡的還是阿萬的打工社畜厭世感，一想到醫生也這麼厭世我突然就沒那麼厭世了。"
-                     data-yt-id="us2Afl0bic4&t"> 
-                    <div class="click-hint">點擊查看更多</div>
-                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/channels4_profile.jpg" class="member-photo">
-                    <div class="member-info">
-                        <h3>厭世醫師阿萬</h3>
-                        <h5>追 V</h5>
-                    </div>
-                </div>
+                <div class="member-card anim-element"
+                     data-title="厭世醫師阿萬" 
+                     data-subtitle="追V / 醫療迷因" 
+                     data-desc="當初是看他分享邪教入坑的(影片現已轉會員)，但阿萬和動物朋友的崩潰遊戲實錄是我最近的快樂來源，不過最喜歡的還是阿萬的打工社畜厭世感，一想到醫生也這麼厭世我突然就沒那麼厭世了。"
+                     data-yt-id="us2Afl0bic4"> 
+                    <div class="click-hint">點擊查看更多</div>
+                    <img src="https://raw.githubusercontent.com/113104001-lang/chenchitopia/refs/heads/main/channels4_profile.jpg" class="member-photo">
+                    <div class="member-info">
+                        <h3>厭世醫師阿萬</h3>
+                        <h5>追 V</h5>
+                    </div>
+                </div>
 
-            </div>
+            </div>
 
-        </div>
+        </div>
 
-    </div>
+    </div>
 
-    <footer>
-        <p>Copyright © 2025 自我介紹. All Rights Reserved.</p>
-    </footer>
+    <footer>
+        <p>Copyright © 2025 自我介紹. All Rights Reserved.</p>
+    </footer>
 
-    <script>
-        setTimeout(() => {
-            const intro = document.getElementById("intro");
-            if (intro) intro.remove();
+    <script>
+        setTimeout(() => {
+            const intro = document.getElementById("intro");
+            if (intro) intro.remove();
 
-            const elements = document.querySelectorAll(".anim-element");
-            elements.forEach((el, index) => {
-                setTimeout(() => {
-                    el.style.animation = "popup-up 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards";
-                }, index * 150);
-            });
-        }, 2500);
+            const elements = document.querySelectorAll(".anim-element");
+            elements.forEach((el, index) => {
+                setTimeout(() => {
+                    // 修正動畫名稱引用，確保 CSS 中有定義 popup-up
+                    el.style.animation = "popup-up 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards";
+                }, index * 150);
+            });
+        }, 2500);
 
-        const memberCards = document.querySelectorAll('.member-card');
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImg = document.getElementById('lightbox-img');
-        const lightboxTitle = document.getElementById('lightbox-title');
-        const lightboxSubtitle = document.getElementById('lightbox-subtitle');
-        const lightboxDesc = document.getElementById('lightbox-desc');
-        const ytPlaceholder = document.getElementById('yt-placeholder');
-        const closeBtn = document.querySelector('.close-btn');
+        const memberCards = document.querySelectorAll('.member-card');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxTitle = document.getElementById('lightbox-title');
+        const lightboxSubtitle = document.getElementById('lightbox-subtitle');
+        const lightboxDesc = document.getElementById('lightbox-desc');
+        const ytPlaceholder = document.getElementById('yt-placeholder');
+        const closeBtn = document.querySelector('.close-btn');
 
-        memberCards.forEach(card => {
-            card.addEventListener('click', () => {
-                const imgUrl = card.querySelector('.member-photo').src;
-                const title = card.getAttribute('data-title');
-                const subtitle = card.getAttribute('data-subtitle');
-                const desc = card.getAttribute('data-desc');
-                const ytId = card.getAttribute('data-yt-id');
+        memberCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const imgUrl = card.querySelector('.member-photo').src;
+                const title = card.getAttribute('data-title');
+                const subtitle = card.getAttribute('data-subtitle');
+                const desc = card.getAttribute('data-desc');
+                const ytId = card.getAttribute('data-yt-id');
 
-                lightboxImg.src = imgUrl;
-                lightboxTitle.textContent = title;
-                lightboxSubtitle.textContent = subtitle;
-                lightboxDesc.textContent = desc;
+                lightboxImg.src = imgUrl;
+                lightboxTitle.textContent = title;
+                lightboxSubtitle.textContent = subtitle;
+                lightboxDesc.textContent = desc;
 
-                if (ytId && ytId !== "dummyID") {
-                    ytPlaceholder.innerHTML = `<iframe width="100%" height="200" src="https://www.youtube.com/embed/${ytId}?autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-                } else {
-                    ytPlaceholder.innerHTML = "<p style='color:#ccc; text-align:center;'>無音樂連結</p>";
-                }
+                if (ytId && ytId !== "dummyID") {
+                    // 確保 ID 乾淨，避免 &t 參數破壞 embed URL
+                    const cleanId = ytId.split('&')[0];
+                    ytPlaceholder.innerHTML = `<iframe width="100%" height="200" src="https://www.youtube.com/embed/${cleanId}?autoplay=1&mute=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+                } else {
+                    ytPlaceholder.innerHTML = "<p style='color:#ccc; text-align:center;'>無音樂連結</p>";
+                }
 
-                lightbox.style.display = 'flex';
-                setTimeout(() => {
-                    lightbox.classList.add('active');
-                }, 10);
-            });
-        });
+                lightbox.style.display = 'flex';
+                setTimeout(() => {
+                    lightbox.classList.add('active');
+                }, 10);
+            });
+        });
 
-        function closeLightbox() {
-            lightbox.classList.remove('active');
-            setTimeout(() => {
-                lightbox.style.display = 'none';
-                ytPlaceholder.innerHTML = ""; 
-            }, 300);
-        }
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            setTimeout(() => {
+                lightbox.style.display = 'none';
+                ytPlaceholder.innerHTML = ""; 
+            }, 300);
+        }
 
-        closeBtn.addEventListener('click', closeLightbox);
-        lightbox.addEventListener('click', (e) => {
-            if (e.target === lightbox) {
-                closeLightbox();
-            }
-        });
-    </script>
-    
-    <style>
-        @keyframes popup {
-            to { opacity: 1; transform: scale(1); }
-        }
-        @keyframes popup-up {
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-    </style>
+        closeBtn.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+    </script>
 </body>
 </html>
